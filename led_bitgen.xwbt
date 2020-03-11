@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/kuro/Documents/FPGA/ElbertV2/ledTest/led.ncd
+OUTFILE=/home/kuro/Documents/FPGA/ElbertV2/ledTest/led.bit
+FAMILY=Spartan3A and Spartan3AN
+PART=xc3s50a-4tq144
+WORKINGDIR=/home/kuro/Documents/FPGA/ElbertV2/ledTest
+LICENSE=WebPack
+USER_INFO=211861506_0_0_373

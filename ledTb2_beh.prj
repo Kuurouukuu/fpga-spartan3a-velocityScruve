@@ -1,0 +1,4 @@
+verilog work "../../quadDec/Binary_to_BCD.v"
+verilog work "led.v"
+verilog work "ledTb2.v"
+verilog work "/media/kuro/HocTap/ISE/14.7/ISE_DS/ISE//verilog/src/glbl.v"

@@ -1,0 +1,518 @@
+--------------------------------------------------------------------------------
+Release 14.7 Trace  (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+/media/kuro/HocTap/ISE/14.7/ISE_DS/ISE/bin/lin64/unwrapped/trce -intstyle ise
+-v 3 -s 4 -n 3 -fastpaths -xml led.twx led.ncd -o led.twr led.pcf
+
+Design file:              led.ncd
+Physical constraint file: led.pcf
+Device,package,speed:     xc3s50a,tq144,-4 (PRODUCTION 1.42 2013-10-13)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter 
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock 
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and 
+   'Phase Error' calculations, these terms will be zero in the Clock 
+   Uncertainty calculation.  Please make appropriate modification to 
+   SYSTEM_JITTER to account for the unsupported Discrete Jitter and Phase 
+   Error.
+
+================================================================================
+Timing constraint: NET "Clk_BUFGP/IBUFG" PERIOD = 83.3333333 ns HIGH 50%;
+For more information, see Period Analysis in the Timing Closure User Guide (UG612).
+
+ 1943 paths analyzed, 292 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   8.596ns.
+--------------------------------------------------------------------------------
+
+Paths for end point converter/r_BCD_0 (SLICE_X14Y10.SR), 42 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     74.737ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_SM_Main_FSM_FFd6 (FF)
+  Destination:          converter/r_BCD_0 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.615ns (Levels of Logic = 4)
+  Clock Path Skew:      0.019ns (0.024 - 0.005)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_SM_Main_FSM_FFd6 to converter/r_BCD_0
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X14Y15.YQ      Tcko                  0.676   converter/r_SM_Main_FSM_FFd6
+                                                       converter/r_SM_Main_FSM_FFd6
+    SLICE_X12Y6.G2       net (fanout=19)       1.022   converter/r_SM_Main_FSM_FFd6
+    SLICE_X12Y6.Y        Tilo                  0.707   N99
+                                                       converter/r_BCD_13_mux000011_SW0
+    SLICE_X17Y11.G3      net (fanout=4)        0.874   N65
+    SLICE_X17Y11.Y       Tilo                  0.648   N137
+                                                       converter/r_BCD_13_mux000011_SW3
+    SLICE_X14Y11.G1      net (fanout=4)        1.263   N93
+    SLICE_X14Y11.Y       Tilo                  0.707   N90
+                                                       converter/r_BCD_0_mux000011_SW7
+    SLICE_X14Y11.F3      net (fanout=1)        0.043   converter/r_BCD_0_mux000011_SW7/O
+    SLICE_X14Y11.X       Tilo                  0.692   N90
+                                                       converter/r_BCD_0_mux0000_SW0
+    SLICE_X14Y10.SR      net (fanout=1)        1.116   N90
+    SLICE_X14Y10.CLK     Tsrck                 0.867   converter/r_BCD<0>
+                                                       converter/r_BCD_0
+    -------------------------------------------------  ---------------------------
+    Total                                      8.615ns (4.297ns logic, 4.318ns route)
+                                                       (49.9% logic, 50.1% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.067ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_SM_Main_FSM_FFd5_1 (FF)
+  Destination:          converter/r_BCD_0 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.222ns (Levels of Logic = 4)
+  Clock Path Skew:      -0.044ns (0.221 - 0.265)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_SM_Main_FSM_FFd5_1 to converter/r_BCD_0
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X11Y10.XQ      Tcko                  0.591   converter/r_SM_Main_FSM_FFd5_1
+                                                       converter/r_SM_Main_FSM_FFd5_1
+    SLICE_X12Y6.G1       net (fanout=1)        0.714   converter/r_SM_Main_FSM_FFd5_1
+    SLICE_X12Y6.Y        Tilo                  0.707   N99
+                                                       converter/r_BCD_13_mux000011_SW0
+    SLICE_X17Y11.G3      net (fanout=4)        0.874   N65
+    SLICE_X17Y11.Y       Tilo                  0.648   N137
+                                                       converter/r_BCD_13_mux000011_SW3
+    SLICE_X14Y11.G1      net (fanout=4)        1.263   N93
+    SLICE_X14Y11.Y       Tilo                  0.707   N90
+                                                       converter/r_BCD_0_mux000011_SW7
+    SLICE_X14Y11.F3      net (fanout=1)        0.043   converter/r_BCD_0_mux000011_SW7/O
+    SLICE_X14Y11.X       Tilo                  0.692   N90
+                                                       converter/r_BCD_0_mux0000_SW0
+    SLICE_X14Y10.SR      net (fanout=1)        1.116   N90
+    SLICE_X14Y10.CLK     Tsrck                 0.867   converter/r_BCD<0>
+                                                       converter/r_BCD_0
+    -------------------------------------------------  ---------------------------
+    Total                                      8.222ns (4.212ns logic, 4.010ns route)
+                                                       (51.2% logic, 48.8% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.369ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_BCD_8 (FF)
+  Destination:          converter/r_BCD_0 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      7.840ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.124ns (0.415 - 0.539)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_BCD_8 to converter/r_BCD_0
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X17Y6.YQ       Tcko                  0.580   converter/r_BCD<8>
+                                                       converter/r_BCD_8
+    SLICE_X15Y6.F1       net (fanout=6)        1.461   converter/r_BCD<8>
+    SLICE_X15Y6.X        Tif5x                 0.924   converter/Madd_add0000_addsub0000_cy<0>
+                                                       converter/Mmux_w_BCD_Digit_3
+                                                       converter/Mmux_w_BCD_Digit_2_f5
+    SLICE_X12Y5.G1       net (fanout=11)       0.614   converter/Madd_add0000_addsub0000_cy<0>
+    SLICE_X12Y5.Y        Tilo                  0.707   converter/N4
+                                                       converter/r_BCD_13_mux000011_SW1
+    SLICE_X14Y11.F4      net (fanout=16)       0.879   N66
+    SLICE_X14Y11.X       Tilo                  0.692   N90
+                                                       converter/r_BCD_0_mux0000_SW0
+    SLICE_X14Y10.SR      net (fanout=1)        1.116   N90
+    SLICE_X14Y10.CLK     Tsrck                 0.867   converter/r_BCD<0>
+                                                       converter/r_BCD_0
+    -------------------------------------------------  ---------------------------
+    Total                                      7.840ns (3.770ns logic, 4.070ns route)
+                                                       (48.1% logic, 51.9% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point converter/r_BCD_3 (SLICE_X16Y11.SR), 42 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     74.739ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_BCD_8 (FF)
+  Destination:          converter/r_BCD_3 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.568ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.026ns (0.026 - 0.052)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_BCD_8 to converter/r_BCD_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X17Y6.YQ       Tcko                  0.580   converter/r_BCD<8>
+                                                       converter/r_BCD_8
+    SLICE_X15Y6.F1       net (fanout=6)        1.461   converter/r_BCD<8>
+    SLICE_X15Y6.X        Tif5x                 0.924   converter/Madd_add0000_addsub0000_cy<0>
+                                                       converter/Mmux_w_BCD_Digit_3
+                                                       converter/Mmux_w_BCD_Digit_2_f5
+    SLICE_X12Y5.G1       net (fanout=11)       0.614   converter/Madd_add0000_addsub0000_cy<0>
+    SLICE_X12Y5.Y        Tilo                  0.707   converter/N4
+                                                       converter/r_BCD_13_mux000011_SW1
+    SLICE_X16Y10.F2      net (fanout=16)       1.568   N66
+    SLICE_X16Y10.X       Tilo                  0.692   N61
+                                                       converter/r_BCD_3_mux0000_SW0
+    SLICE_X16Y11.SR      net (fanout=1)        1.155   N61
+    SLICE_X16Y11.CLK     Tsrck                 0.867   converter/r_BCD<3>
+                                                       converter/r_BCD_3
+    -------------------------------------------------  ---------------------------
+    Total                                      8.568ns (3.770ns logic, 4.798ns route)
+                                                       (44.0% logic, 56.0% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.054ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_BCD_1 (FF)
+  Destination:          converter/r_BCD_3 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.261ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.018ns (0.026 - 0.044)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_BCD_1 to converter/r_BCD_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X17Y9.YQ       Tcko                  0.580   converter/r_BCD<1>
+                                                       converter/r_BCD_1
+    SLICE_X14Y5.G1       net (fanout=6)        1.221   converter/r_BCD<1>
+    SLICE_X14Y5.X        Tif5x                 0.987   converter/w_BCD_Digit<1>
+                                                       converter/Mmux_w_BCD_Digit_41
+                                                       converter/Mmux_w_BCD_Digit_2_f5_0
+    SLICE_X12Y5.G4       net (fanout=6)        0.484   converter/w_BCD_Digit<1>
+    SLICE_X12Y5.Y        Tilo                  0.707   converter/N4
+                                                       converter/r_BCD_13_mux000011_SW1
+    SLICE_X16Y10.F2      net (fanout=16)       1.568   N66
+    SLICE_X16Y10.X       Tilo                  0.692   N61
+                                                       converter/r_BCD_3_mux0000_SW0
+    SLICE_X16Y11.SR      net (fanout=1)        1.155   N61
+    SLICE_X16Y11.CLK     Tsrck                 0.867   converter/r_BCD<3>
+                                                       converter/r_BCD_3
+    -------------------------------------------------  ---------------------------
+    Total                                      8.261ns (3.833ns logic, 4.428ns route)
+                                                       (46.4% logic, 53.6% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.058ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_BCD_0 (FF)
+  Destination:          converter/r_BCD_3 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.226ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.049ns (0.440 - 0.489)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_BCD_0 to converter/r_BCD_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X14Y10.YQ      Tcko                  0.676   converter/r_BCD<0>
+                                                       converter/r_BCD_0
+    SLICE_X15Y6.G3       net (fanout=6)        1.023   converter/r_BCD<0>
+    SLICE_X15Y6.X        Tif5x                 0.924   converter/Madd_add0000_addsub0000_cy<0>
+                                                       converter/Mmux_w_BCD_Digit_4
+                                                       converter/Mmux_w_BCD_Digit_2_f5
+    SLICE_X12Y5.G1       net (fanout=11)       0.614   converter/Madd_add0000_addsub0000_cy<0>
+    SLICE_X12Y5.Y        Tilo                  0.707   converter/N4
+                                                       converter/r_BCD_13_mux000011_SW1
+    SLICE_X16Y10.F2      net (fanout=16)       1.568   N66
+    SLICE_X16Y10.X       Tilo                  0.692   N61
+                                                       converter/r_BCD_3_mux0000_SW0
+    SLICE_X16Y11.SR      net (fanout=1)        1.155   N61
+    SLICE_X16Y11.CLK     Tsrck                 0.867   converter/r_BCD<3>
+                                                       converter/r_BCD_3
+    -------------------------------------------------  ---------------------------
+    Total                                      8.226ns (3.866ns logic, 4.360ns route)
+                                                       (47.0% logic, 53.0% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point converter/r_BCD_4 (SLICE_X19Y6.SR), 54 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     74.831ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_Digit_Index_1 (FF)
+  Destination:          converter/r_BCD_4 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      8.434ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.068ns (0.421 - 0.489)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_Digit_Index_1 to converter/r_BCD_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X15Y11.XQ      Tcko                  0.591   converter/r_Digit_Index<1>
+                                                       converter/r_Digit_Index_1
+    SLICE_X16Y13.BX      net (fanout=25)       1.862   converter/r_Digit_Index<1>
+    SLICE_X16Y13.X       Tbxx                  0.860   converter/Madd_add0000_addsub0000_lut<3>
+                                                       converter/Mmux_w_BCD_Digit_2_f5_2
+    SLICE_X17Y5.BX       net (fanout=19)       1.313   converter/Madd_add0000_addsub0000_lut<3>
+    SLICE_X17Y5.X        Tbxx                  0.756   N148
+                                                       converter/r_BCD_10_mux000011_SW0
+    SLICE_X17Y4.F1       net (fanout=1)        0.173   N148
+    SLICE_X17Y4.X        Tilo                  0.643   converter/r_BCD_4_mux000017
+                                                       converter/r_BCD_4_mux000017
+    SLICE_X19Y6.SR       net (fanout=1)        1.369   converter/r_BCD_4_mux000017
+    SLICE_X19Y6.CLK      Tsrck                 0.867   converter/r_BCD<4>
+                                                       converter/r_BCD_4
+    -------------------------------------------------  ---------------------------
+    Total                                      8.434ns (3.717ns logic, 4.717ns route)
+                                                       (44.1% logic, 55.9% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.407ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_BCD_8 (FF)
+  Destination:          converter/r_BCD_4 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      7.842ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.084ns (0.227 - 0.311)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_BCD_8 to converter/r_BCD_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X17Y6.YQ       Tcko                  0.580   converter/r_BCD<8>
+                                                       converter/r_BCD_8
+    SLICE_X15Y6.F1       net (fanout=6)        1.461   converter/r_BCD<8>
+    SLICE_X15Y6.X        Tif5x                 0.924   converter/Madd_add0000_addsub0000_cy<0>
+                                                       converter/Mmux_w_BCD_Digit_3
+                                                       converter/Mmux_w_BCD_Digit_2_f5
+    SLICE_X17Y5.F2       net (fanout=11)       0.901   converter/Madd_add0000_addsub0000_cy<0>
+    SLICE_X17Y5.X        Tif5x                 0.924   N148
+                                                       converter/r_BCD_10_mux000011_SW0_G
+                                                       converter/r_BCD_10_mux000011_SW0
+    SLICE_X17Y4.F1       net (fanout=1)        0.173   N148
+    SLICE_X17Y4.X        Tilo                  0.643   converter/r_BCD_4_mux000017
+                                                       converter/r_BCD_4_mux000017
+    SLICE_X19Y6.SR       net (fanout=1)        1.369   converter/r_BCD_4_mux000017
+    SLICE_X19Y6.CLK      Tsrck                 0.867   converter/r_BCD<4>
+                                                       converter/r_BCD_4
+    -------------------------------------------------  ---------------------------
+    Total                                      7.842ns (3.938ns logic, 3.904ns route)
+                                                       (50.2% logic, 49.8% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     75.415ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               converter/r_Digit_Index_0_2 (FF)
+  Destination:          converter/r_BCD_4 (FF)
+  Requirement:          83.333ns
+  Data Path Delay:      7.863ns (Levels of Logic = 3)
+  Clock Path Skew:      -0.055ns (0.421 - 0.476)
+  Source Clock:         Clk_BUFGP rising at 0.000ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Maximum Data Path: converter/r_Digit_Index_0_2 to converter/r_BCD_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X15Y12.YQ      Tcko                  0.580   converter/r_Digit_Index_0_2
+                                                       converter/r_Digit_Index_0_2
+    SLICE_X16Y13.F1      net (fanout=2)        1.175   converter/r_Digit_Index_0_2
+    SLICE_X16Y13.X       Tif5x                 0.987   converter/Madd_add0000_addsub0000_lut<3>
+                                                       converter/Mmux_w_BCD_Digit_33
+                                                       converter/Mmux_w_BCD_Digit_2_f5_2
+    SLICE_X17Y5.BX       net (fanout=19)       1.313   converter/Madd_add0000_addsub0000_lut<3>
+    SLICE_X17Y5.X        Tbxx                  0.756   N148
+                                                       converter/r_BCD_10_mux000011_SW0
+    SLICE_X17Y4.F1       net (fanout=1)        0.173   N148
+    SLICE_X17Y4.X        Tilo                  0.643   converter/r_BCD_4_mux000017
+                                                       converter/r_BCD_4_mux000017
+    SLICE_X19Y6.SR       net (fanout=1)        1.369   converter/r_BCD_4_mux000017
+    SLICE_X19Y6.CLK      Tsrck                 0.867   converter/r_BCD<4>
+                                                       converter/r_BCD_4
+    -------------------------------------------------  ---------------------------
+    Total                                      7.863ns (3.833ns logic, 4.030ns route)
+                                                       (48.7% logic, 51.3% route)
+
+--------------------------------------------------------------------------------
+
+Hold Paths: NET "Clk_BUFGP/IBUFG" PERIOD = 83.3333333 ns HIGH 50%;
+--------------------------------------------------------------------------------
+
+Paths for end point Clk_5 (SLICE_X10Y19.BY), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      1.042ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               counter_15 (FF)
+  Destination:          Clk_5 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      1.070ns (Levels of Logic = 0)
+  Clock Path Skew:      0.028ns (0.244 - 0.216)
+  Source Clock:         Clk_BUFGP rising at 83.333ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path: counter_15 to Clk_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X9Y17.YQ       Tcko                  0.464   counter<14>
+                                                       counter_15
+    SLICE_X10Y19.BY      net (fanout=2)        0.433   counter<15>
+    SLICE_X10Y19.CLK     Tckdi       (-Th)    -0.173   Clk_23
+                                                       Clk_5
+    -------------------------------------------------  ---------------------------
+    Total                                      1.070ns (0.637ns logic, 0.433ns route)
+                                                       (59.5% logic, 40.5% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point converter/r_Digit_Index_0_2 (SLICE_X15Y12.BY), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      1.054ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               converter/r_Digit_Index_0 (FF)
+  Destination:          converter/r_Digit_Index_0_2 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      1.045ns (Levels of Logic = 0)
+  Clock Path Skew:      -0.009ns (0.015 - 0.024)
+  Source Clock:         Clk_BUFGP rising at 83.333ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path: converter/r_Digit_Index_0 to converter/r_Digit_Index_0_2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X15Y11.YQ      Tcko                  0.464   converter/r_Digit_Index<1>
+                                                       converter/r_Digit_Index_0
+    SLICE_X15Y12.BY      net (fanout=27)       0.441   converter/r_Digit_Index<0>
+    SLICE_X15Y12.CLK     Tckdi       (-Th)    -0.140   converter/r_Digit_Index_0_2
+                                                       converter/r_Digit_Index_0_2
+    -------------------------------------------------  ---------------------------
+    Total                                      1.045ns (0.604ns logic, 0.441ns route)
+                                                       (57.8% logic, 42.2% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point converter/r_Loop_Count_4 (SLICE_X11Y14.CE), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      1.075ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               converter/r_SM_Main_FSM_FFd4 (FF)
+  Destination:          converter/r_Loop_Count_4 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      1.066ns (Levels of Logic = 0)
+  Clock Path Skew:      -0.009ns (0.005 - 0.014)
+  Source Clock:         Clk_BUFGP rising at 83.333ns
+  Destination Clock:    Clk_BUFGP rising at 83.333ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path: converter/r_SM_Main_FSM_FFd4 to converter/r_Loop_Count_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X10Y13.YQ      Tcko                  0.541   converter/r_SM_Main_FSM_FFd3
+                                                       converter/r_SM_Main_FSM_FFd4
+    SLICE_X11Y14.CE      net (fanout=6)        0.525   converter/r_SM_Main_FSM_FFd4
+    SLICE_X11Y14.CLK     Tckce       (-Th)     0.000   converter/r_Loop_Count<4>
+                                                       converter/r_Loop_Count_4
+    -------------------------------------------------  ---------------------------
+    Total                                      1.066ns (0.541ns logic, 0.525ns route)
+                                                       (50.8% logic, 49.2% route)
+
+--------------------------------------------------------------------------------
+
+Component Switching Limit Checks: NET "Clk_BUFGP/IBUFG" PERIOD = 83.3333333 ns HIGH 50%;
+--------------------------------------------------------------------------------
+Slack: 81.731ns (period - (min low pulse limit / (low pulse / period)))
+  Period: 83.333ns
+  Low pulse: 41.666ns
+  Low pulse limit: 0.801ns (Tcl)
+  Physical resource: converter/r_Binary<6>/CLK
+  Logical resource: converter/r_Binary_6/CK
+  Location pin: SLICE_X2Y12.CLK
+  Clock network: Clk_BUFGP
+--------------------------------------------------------------------------------
+Slack: 81.731ns (period - (min high pulse limit / (high pulse / period)))
+  Period: 83.333ns
+  High pulse: 41.666ns
+  High pulse limit: 0.801ns (Tch)
+  Physical resource: converter/r_Binary<6>/CLK
+  Logical resource: converter/r_Binary_6/CK
+  Location pin: SLICE_X2Y12.CLK
+  Clock network: Clk_BUFGP
+--------------------------------------------------------------------------------
+Slack: 81.731ns (period - (min low pulse limit / (low pulse / period)))
+  Period: 83.333ns
+  Low pulse: 41.666ns
+  Low pulse limit: 0.801ns (Tcl)
+  Physical resource: converter/r_Binary<8>/CLK
+  Logical resource: converter/r_Binary_8/CK
+  Location pin: SLICE_X2Y13.CLK
+  Clock network: Clk_BUFGP
+--------------------------------------------------------------------------------
+
+
+All constraints were met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock Clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+Clk            |    8.596|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 1943 paths, 0 nets, and 591 connections
+
+Design statistics:
+   Minimum period:   8.596ns{1}   (Maximum frequency: 116.333MHz)
+
+
+------------------------------------Footnotes-----------------------------------
+1)  The minimum period statistic assumes all single cycle delays.
+
+Analysis completed Wed Mar 11 21:55:34 2020 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 368 MB
+
+
+

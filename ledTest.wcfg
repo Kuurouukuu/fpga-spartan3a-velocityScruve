@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/kuro/Documents/FPGA/ElbertV2/ledTest/ledTb2_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="ledTb2" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/ledTb2/SevenSegment" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">SevenSegment[7:0]</obj_property>
+      <obj_property name="ObjectShortName">SevenSegment[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Enable" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Enable[2:0]</obj_property>
+      <obj_property name="ObjectShortName">Enable[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Clk</obj_property>
+      <obj_property name="ObjectShortName">Clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Switch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Switch[5:0]</obj_property>
+      <obj_property name="ObjectShortName">Switch[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rst</obj_property>
+      <obj_property name="ObjectShortName">Rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/converter/o_BCD" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">o_BCD[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_BCD[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/r_displayValue" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_displayValue[11:0]</obj_property>
+      <obj_property name="ObjectShortName">r_displayValue[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/DV" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">DV</obj_property>
+      <obj_property name="ObjectShortName">DV</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/s_Main" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">s_Main[2:0]</obj_property>
+      <obj_property name="ObjectShortName">s_Main[2:0]</obj_property>
+   </wvobject>
+</wave_config>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/kuro/Documents/FPGA/ElbertV2/ledTest/ledTb2_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="ledTb2" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/ledTb2/SevenSegment" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">SevenSegment[7:0]</obj_property>
+      <obj_property name="ObjectShortName">SevenSegment[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Enable" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Enable[2:0]</obj_property>
+      <obj_property name="ObjectShortName">Enable[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Clk</obj_property>
+      <obj_property name="ObjectShortName">Clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Switch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Switch[5:0]</obj_property>
+      <obj_property name="ObjectShortName">Switch[5:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/Rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rst</obj_property>
+      <obj_property name="ObjectShortName">Rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/bcdResult" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bcdResult[11:0]</obj_property>
+      <obj_property name="ObjectShortName">bcdResult[11:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/currValue" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">currValue[11:0]</obj_property>
+      <obj_property name="ObjectShortName">currValue[11:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus71" type="vbus" db_ref_id="1">
+      <obj_property name="label">FirstBCD</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/currValue[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">currValue[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">currValue[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">currValue[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">currValue[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus70" type="vbus" db_ref_id="1">
+      <obj_property name="label">SecondBCD</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/currValue[7]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">currValue[7]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[6]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">currValue[6]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[5]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">currValue[5]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[4]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">currValue[4]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus69" type="vbus" db_ref_id="1">
+      <obj_property name="label">ThirdBCD</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/currValue[3]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">currValue[3]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[2]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">currValue[2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[1]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">currValue[1]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/currValue[0]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">currValue[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/ledTb2/uut/prevValue" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prevValue[11:0]</obj_property>
+      <obj_property name="ObjectShortName">prevValue[11:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="group13" type="group">
+      <obj_property name="label">FirstDigit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/carryout" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryout</obj_property>
+         <obj_property name="ObjectShortName">carryout</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/carryin" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryin</obj_property>
+         <obj_property name="ObjectShortName">carryin</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/X" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">X[3:0]</obj_property>
+         <obj_property name="ObjectShortName">X[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/Y" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Y[3:0]</obj_property>
+         <obj_property name="ObjectShortName">Y[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/S" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">S[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/firstDigit/Z" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Z[4:0]</obj_property>
+         <obj_property name="ObjectShortName">Z[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group14" type="group">
+      <obj_property name="label">SecondDigit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/X" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">X[3:0]</obj_property>
+         <obj_property name="ObjectShortName">X[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/Y" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Y[3:0]</obj_property>
+         <obj_property name="ObjectShortName">Y[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/S" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">S[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/Z" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Z[4:0]</obj_property>
+         <obj_property name="ObjectShortName">Z[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/carryin" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryin</obj_property>
+         <obj_property name="ObjectShortName">carryin</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/secondDigit/carryout" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryout</obj_property>
+         <obj_property name="ObjectShortName">carryout</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group23" type="group">
+      <obj_property name="label">ThirdDigit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/X" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">X[3:0]</obj_property>
+         <obj_property name="ObjectShortName">X[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/Y" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Y[3:0]</obj_property>
+         <obj_property name="ObjectShortName">Y[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/carryin" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryin</obj_property>
+         <obj_property name="ObjectShortName">carryin</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/S" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">S[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/carryout" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">carryout</obj_property>
+         <obj_property name="ObjectShortName">carryout</obj_property>
+      </wvobject>
+      <wvobject fp_name="/ledTb2/uut/thirdDigit/Z" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">Z[4:0]</obj_property>
+         <obj_property name="ObjectShortName">Z[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

@@ -1,0 +1,2 @@
+verilog work "../../quadDec/Binary_to_BCD.v"
+verilog work "led.v"
