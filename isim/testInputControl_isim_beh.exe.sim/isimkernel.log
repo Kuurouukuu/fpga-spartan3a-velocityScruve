@@ -1,0 +1,29 @@
+Command line:
+   testInputControl_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  60447
+
+Thu Mar 12 20:39:57 2020
+
+
+ Elaboration Time: 0.03 sec
+
+ Current Memory Usage: 246.591 Meg
+
+ Total Signals          : 30
+ Total Nets             : 100
+ Total Signal Drivers   : 17
+ Total Blocks           : 4
+ Total Primitive Blocks : 2
+ Total Processes        : 25
+ Total Traceable Variables  : 55
+ Total Scalar Nets and Variables : 451
+Total Line Count : 143
+
+ Total Simulation Time: 0.09 sec
+
+ Current Memory Usage: 322.093 Meg
+
+Thu Mar 12 22:49:54 2020
+

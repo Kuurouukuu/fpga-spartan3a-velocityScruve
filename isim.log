@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/kuro/Documents/FPGA/ElbertV2/ledTest/ledTb2_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/kuro/Documents/FPGA/ElbertV2/ledTest/ledTb2_isim_beh.wdb 
+Running: /home/kuro/Documents/FPGA/ElbertV2/ledTest/testInputControl_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/kuro/Documents/FPGA/ElbertV2/ledTest/testInputControl_isim_beh.wdb 
 ISim P.20131013 (signature 0xfbc00daa)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -21,5 +21,11 @@ WARNING:  For instance uut/converter/, width 1 of formal port i_Start is not equ
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
+# run 1.00us
+# run 1.00us
+# run 1.00us
+# run 1.00us
+# run 1.00us
+# run 1.00us
 # run 1.00us
 # exit 0

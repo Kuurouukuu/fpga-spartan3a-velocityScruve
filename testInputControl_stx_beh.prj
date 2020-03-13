@@ -1,0 +1,4 @@
+verilog isim_temp "../../quadDec/Binary_to_BCD.v"
+verilog isim_temp "led.v"
+verilog isim_temp "testInputControl.v"
+verilog isim_temp "/media/kuro/HocTap/ISE/14.7/ISE_DS/ISE//verilog/src/glbl.v"

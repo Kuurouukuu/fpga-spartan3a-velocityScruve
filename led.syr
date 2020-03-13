@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Reading design: led.prj
@@ -107,7 +107,11 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
+Compiling verilog file "../../quadDec/counter.v" in library work
+Compiling verilog file "../../quadDec/quadDecode.v" in library work
+Module <counter> compiled
 Compiling verilog file "../../quadDec/Binary_to_BCD.v" in library work
+Module <quadDecode> compiled
 Compiling verilog file "led.v" in library work
 Module <Binary_to_BCD> compiled
 Module <led> compiled
@@ -137,6 +141,13 @@ Analyzing hierarchy for module <Binary_to_BCD> in library <work> with parameters
 	s_IDLE = "000"
 	s_SHIFT = "001"
 
+Analyzing hierarchy for module <quadDecode> in library <work> with parameters.
+	N = "00000000000000000000000000010000"
+	debounceThresh = "00000000000000000000000000001010"
+
+Analyzing hierarchy for module <counter> in library <work> with parameters.
+	N = "00000000000000000000000000010000"
+
 
 =========================================================================
 *                            HDL Analysis                               *
@@ -149,6 +160,8 @@ Analyzing top module <led>.
 	s_Segment1 = 2'b01
 	s_Segment2 = 2'b10
 	s_Segment3 = 2'b11
+WARNING:Xst:852 - "led.v" line 144: Unconnected input port 'sClr' of instance 'decoder' is tied to GND.
+WARNING:Xst:852 - "led.v" line 144: Unconnected input port 'setOrigin' of instance 'decoder' is tied to GND.
 Module <led> is correct for synthesis.
  
 Analyzing module <Binary_to_BCD> in library <work>.
@@ -162,6 +175,15 @@ Analyzing module <Binary_to_BCD> in library <work>.
 	s_SHIFT = 3'b001
 WARNING:Xst:790 - "../../quadDec/Binary_to_BCD.v" line 163: Index value(s) does not match array range, simulation mismatch.
 Module <Binary_to_BCD> is correct for synthesis.
+ 
+Analyzing module <quadDecode> in library <work>.
+	N = 32'sb00000000000000000000000000010000
+	debounceThresh = 32'sb00000000000000000000000000001010
+Module <quadDecode> is correct for synthesis.
+ 
+Analyzing module <counter> in library <work>.
+	N = 32'sb00000000000000000000000000010000
+Module <counter> is correct for synthesis.
  
 
 =========================================================================
@@ -204,11 +226,40 @@ WARNING:Xst:1872 - Variable <i> is used but never assigned.
 Unit <Binary_to_BCD> synthesized.
 
 
+Synthesizing Unit <counter>.
+    Related source file is "../../quadDec/counter.v".
+    Found 16-bit updown counter for signal <Out>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <counter> synthesized.
+
+
+Synthesizing Unit <quadDecode>.
+    Related source file is "../../quadDec/quadDecode.v".
+WARNING:Xst:647 - Input <sClr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1780 - Signal <counter> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <a_prev> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 1-bit register for signal <direction>.
+    Found 2-bit register for signal <a_new>.
+    Found 2-bit register for signal <b_new>.
+    Found 1-bit register for signal <b_prev>.
+    Found 1-bit xor2 for signal <direction$xor0000> created at line 65.
+    Found 1-bit register for signal <newValueDetected>.
+    Found 1-bit xor2 for signal <or0000$xor0000> created at line 37.
+    Found 1-bit xor2 for signal <or0000$xor0001> created at line 37.
+    Summary:
+	inferred   7 D-type flip-flop(s).
+Unit <quadDecode> synthesized.
+
+
 Synthesizing Unit <led>.
     Related source file is "led.v".
 WARNING:Xst:647 - Input <Switch> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <start> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <w_Direction> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <value> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <start> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <r_displayValue<15:12>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <Clk_23> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_1> for signal <s_Main>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
@@ -220,16 +271,15 @@ WARNING:Xst:646 - Signal <r_displayValue<15:12>> is assigned but never used. Thi
     | Encoding           | automatic                                      |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 1-bit register for signal <Clk_23>.
+    Found 1-bit register for signal <Clk_10>.
     Found 1-bit register for signal <Clk_5>.
     Found 24-bit up counter for signal <counter>.
     Found 16-bit register for signal <r_displayValue>.
     Found 3-bit register for signal <r_Enable>.
     Found 8-bit register for signal <r_SevenSegment>.
-    Found 13-bit up counter for signal <value>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   2 Counter(s).
+	inferred   1 Counter(s).
 	inferred  29 D-type flip-flop(s).
 Unit <led> synthesized.
 
@@ -240,21 +290,24 @@ HDL Synthesis Report
 Macro Statistics
 # Adders/Subtractors                                   : 1
  4-bit adder carry out                                 : 1
-# Counters                                             : 4
- 13-bit up counter                                     : 1
+# Counters                                             : 5
+ 16-bit updown counter                                 : 2
  24-bit up counter                                     : 1
  4-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 23
- 1-bit register                                        : 19
+# Registers                                            : 28
+ 1-bit register                                        : 22
  13-bit register                                       : 1
  16-bit register                                       : 1
+ 2-bit register                                        : 2
  3-bit register                                        : 1
  8-bit register                                        : 1
 # Comparators                                          : 1
  4-bit comparator greater                              : 1
 # Multiplexers                                         : 1
  4-bit 4-to-1 multiplexer                              : 1
+# Xors                                                 : 3
+ 1-bit xor2                                            : 3
 
 =========================================================================
 
@@ -302,17 +355,19 @@ Macro Statistics
 # FSMs                                                 : 2
 # Adders/Subtractors                                   : 1
  4-bit adder carry out                                 : 1
-# Counters                                             : 4
- 13-bit up counter                                     : 1
+# Counters                                             : 5
+ 16-bit updown counter                                 : 2
  24-bit up counter                                     : 1
  4-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 55
- Flip-Flops                                            : 55
+# Registers                                            : 62
+ Flip-Flops                                            : 62
 # Comparators                                          : 1
  4-bit comparator greater                              : 1
 # Multiplexers                                         : 1
  4-bit 4-to-1 multiplexer                              : 1
+# Xors                                                 : 3
+ 1-bit xor2                                            : 3
 
 =========================================================================
 
@@ -321,15 +376,28 @@ Macro Statistics
 =========================================================================
 WARNING:Xst:1426 - The value init of the FF/Latch FSM_FFd4 hinder the constant cleaning in the block FSM_1-parent.
    You should achieve better results by setting this init to 0.
+WARNING:Xst:2677 - Node <counter_16> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_17> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_18> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_19> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_20> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_21> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_22> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <counter_23> of sequential type is unconnected in block <led>.
 
 Optimizing unit <led> ...
 
 Optimizing unit <Binary_to_BCD> ...
 
+Optimizing unit <quadDecode> ...
+WARNING:Xst:2677 - Node <decoder/positionCounter/Out_0> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <decoder/positionCounter/Out_1> of sequential type is unconnected in block <led>.
+WARNING:Xst:2677 - Node <decoder/positionCounter/Out_2> of sequential type is unconnected in block <led>.
+
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block led, actual ratio is 15.
-FlipFlop converter/r_Digit_Index_0 has been replicated 2 time(s)
+Found area constraint ratio of 100 (+ 5) on block led, actual ratio is 17.
+FlipFlop converter/r_Digit_Index_0 has been replicated 1 time(s)
 FlipFlop converter/r_Digit_Index_1 has been replicated 1 time(s)
 FlipFlop converter/r_SM_Main_FSM_FFd5 has been replicated 1 time(s)
 
@@ -339,8 +407,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 118
- Flip-Flops                                            : 118
+# Registers                                            : 132
+ Flip-Flops                                            : 132
 
 =========================================================================
 
@@ -366,33 +434,38 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : No
 
 Design Statistics
-# IOs                              : 18
+# IOs                              : 20
 
 Cell Usage :
-# BELS                             : 333
+# BELS                             : 365
 #      GND                         : 1
-#      INV                         : 4
-#      LUT1                        : 42
-#      LUT2                        : 8
+#      INV                         : 5
+#      LUT1                        : 37
+#      LUT2                        : 22
 #      LUT2_D                      : 3
 #      LUT3                        : 53
 #      LUT3_D                      : 7
 #      LUT3_L                      : 2
-#      LUT4                        : 78
+#      LUT4                        : 85
 #      LUT4_D                      : 6
 #      LUT4_L                      : 18
-#      MUXCY                       : 42
+#      MUXCY                       : 49
 #      MUXF5                       : 23
 #      VCC                         : 1
-#      XORCY                       : 45
-# FlipFlops/Latches                : 118
-#      FD                          : 72
-#      FDRE                        : 15
+#      XORCY                       : 53
+# FlipFlops/Latches                : 132
+#      FD                          : 55
+#      FDCE                        : 29
+#      FDE                         : 2
+#      FDR                         : 1
+#      FDRE                        : 14
 #      FDS                         : 30
 #      FDSE                        : 1
-# Clock Buffers                    : 1
+# Clock Buffers                    : 2
+#      BUFG                        : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 11
+# IO Buffers                       : 13
+#      IBUF                        : 2
 #      OBUF                        : 11
 =========================================================================
 
@@ -401,12 +474,12 @@ Device utilization summary:
 
 Selected Device : 3s50atq144-4 
 
- Number of Slices:                      115  out of    704    16%  
- Number of Slice Flip Flops:            118  out of   1408     8%  
- Number of 4 input LUTs:                221  out of   1408    15%  
- Number of IOs:                          18
- Number of bonded IOBs:                  12  out of    108    11%  
- Number of GCLKs:                         1  out of     24     4%  
+ Number of Slices:                      126  out of    704    17%  
+ Number of Slice Flip Flops:            132  out of   1408     9%  
+ Number of 4 input LUTs:                238  out of   1408    16%  
+ Number of IOs:                          20
+ Number of bonded IOBs:                  14  out of    108    12%  
+ Number of GCLKs:                         2  out of     24     8%  
 
 ---------------------------
 Partition Resource Summary:
@@ -426,26 +499,32 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
------------------------------------+------------------------+-------+
-Clock Signal                       | Clock buffer(FF name)  | Load  |
------------------------------------+------------------------+-------+
-Clk                                | BUFGP                  | 78    |
-converter/r_DV                     | NONE(r_displayValue_0) | 12    |
-Clk_5                              | NONE(s_Main_FSM_FFd4)  | 15    |
-Clk_23                             | NONE(value_0)          | 13    |
------------------------------------+------------------------+-------+
+-----------------------------------+------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)              | Load  |
+-----------------------------------+------------------------------------+-------+
+Clk                                | BUFGP                              | 69    |
+converter/r_DV                     | NONE(r_displayValue_0)             | 12    |
+Clk_5                              | NONE(s_Main_FSM_FFd4)              | 15    |
+Clk_101                            | BUFG                               | 23    |
+decoder/newValueDetected           | NONE(decoder/positionCounter/Out_3)| 13    |
+-----------------------------------+------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
 ----------------------------------------
-No asynchronous control signals found in this design
+-----------------------------------+-------------------------------------+-------+
+Control Signal                     | Buffer(FF name)                     | Load  |
+-----------------------------------+-------------------------------------+-------+
+decoder/_or0000(decoder/_or00001:O)| NONE(decoder/debounceCounter/Out_0) | 16    |
+N0(XST_GND:G)                      | NONE(decoder/positionCounter/Out_10)| 13    |
+-----------------------------------+-------------------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -4
 
-   Minimum period: 6.890ns (Maximum Frequency: 145.138MHz)
-   Minimum input arrival time before clock: No path found
+   Minimum period: 7.009ns (Maximum Frequency: 142.681MHz)
+   Minimum input arrival time before clock: 1.521ns
    Maximum output required time after clock: 5.558ns
    Maximum combinational path delay: No path found
 
@@ -455,28 +534,28 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'Clk'
-  Clock period: 6.890ns (frequency: 145.138MHz)
-  Total number of paths / destination ports: 1943 / 127
+  Clock period: 7.009ns (frequency: 142.681MHz)
+  Total number of paths / destination ports: 1769 / 116
 -------------------------------------------------------------------------
-Delay:               6.890ns (Levels of Logic = 4)
-  Source:            converter/r_BCD_4 (FF)
-  Destination:       converter/r_BCD_0 (FF)
+Delay:               7.009ns (Levels of Logic = 4)
+  Source:            converter/r_Digit_Index_0 (FF)
+  Destination:       converter/r_BCD_4 (FF)
   Source Clock:      Clk rising
   Destination Clock: Clk rising
 
-  Data Path: converter/r_BCD_4 to converter/r_BCD_0
+  Data Path: converter/r_Digit_Index_0 to converter/r_BCD_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDS:C->Q              5   0.591   0.776  converter/r_BCD_4 (converter/r_BCD_4)
-     LUT3:I0->O            1   0.648   0.000  converter/Mmux_w_BCD_Digit_4 (converter/Mmux_w_BCD_Digit_4)
-     MUXF5:I0->O          11   0.276   0.965  converter/Mmux_w_BCD_Digit_2_f5 (converter/Madd_add0000_addsub0000_cy<0>)
-     LUT3_D:I2->O         15   0.648   1.049  converter/r_BCD_13_mux000011_SW1 (N66)
-     LUT4:I2->O            1   0.648   0.420  converter/r_BCD_15_mux0000_SW0 (N82)
-     FDS:S                     0.869          converter/r_BCD_15
+     FDRE:C->Q            27   0.591   1.293  converter/r_Digit_Index_0 (converter/r_Digit_Index_0)
+     LUT3:I2->O            1   0.648   0.000  converter/Mmux_w_BCD_Digit_33 (converter/Mmux_w_BCD_Digit_33)
+     MUXF5:I1->O          19   0.276   1.085  converter/Mmux_w_BCD_Digit_2_f5_2 (converter/Madd_add0000_addsub0000_lut<3>)
+     MUXF5:S->O            1   0.756   0.423  converter/r_BCD_10_mux000011_SW0 (N148)
+     LUT4:I3->O            1   0.648   0.420  converter/r_BCD_4_mux000017 (converter/r_BCD_4_mux000017)
+     FDS:S                     0.869          converter/r_BCD_4
     ----------------------------------------
-    Total                      6.890ns (3.680ns logic, 3.210ns route)
-                                       (53.4% logic, 46.6% route)
+    Total                      7.009ns (3.788ns logic, 3.221ns route)
+                                       (54.0% logic, 46.0% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'Clk_5'
@@ -504,38 +583,94 @@ Delay:               6.044ns (Levels of Logic = 4)
                                        (56.8% logic, 43.2% route)
 
 =========================================================================
-Timing constraint: Default period analysis for Clock 'Clk_23'
-  Clock period: 4.207ns (frequency: 237.699MHz)
-  Total number of paths / destination ports: 91 / 13
+Timing constraint: Default period analysis for Clock 'Clk_101'
+  Clock period: 4.402ns (frequency: 227.169MHz)
+  Total number of paths / destination ports: 189 / 23
 -------------------------------------------------------------------------
-Delay:               4.207ns (Levels of Logic = 13)
-  Source:            value_1 (FF)
-  Destination:       value_12 (FF)
-  Source Clock:      Clk_23 rising
-  Destination Clock: Clk_23 rising
+Delay:               4.402ns (Levels of Logic = 16)
+  Source:            decoder/debounceCounter/Out_14 (FF)
+  Destination:       decoder/debounceCounter/Out_0 (FF)
+  Source Clock:      Clk_101 rising
+  Destination Clock: Clk_101 rising
 
-  Data Path: value_1 to value_12
+  Data Path: decoder/debounceCounter/Out_14 to decoder/debounceCounter/Out_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               2   0.591   0.590  value_1 (value_1)
-     LUT1:I0->O            1   0.648   0.000  Mcount_value_cy<1>_rt (Mcount_value_cy<1>_rt)
-     MUXCY:S->O            1   0.632   0.000  Mcount_value_cy<1> (Mcount_value_cy<1>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<2> (Mcount_value_cy<2>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<3> (Mcount_value_cy<3>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<4> (Mcount_value_cy<4>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<5> (Mcount_value_cy<5>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<6> (Mcount_value_cy<6>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<7> (Mcount_value_cy<7>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<8> (Mcount_value_cy<8>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<9> (Mcount_value_cy<9>)
-     MUXCY:CI->O           1   0.065   0.000  Mcount_value_cy<10> (Mcount_value_cy<10>)
-     MUXCY:CI->O           0   0.065   0.000  Mcount_value_cy<11> (Mcount_value_cy<11>)
-     XORCY:CI->O           1   0.844   0.000  Mcount_value_xor<12> (Result<12>)
-     FD:D                      0.252          value_12
+     FDCE:C->Q             2   0.591   0.590  decoder/debounceCounter/Out_14 (decoder/debounceCounter/Out_14)
+     LUT1:I0->O            1   0.648   0.000  decoder/debounceCounter/Mcount_Out_cy<1>_rt (decoder/debounceCounter/Mcount_Out_cy<1>_rt)
+     MUXCY:S->O            1   0.632   0.000  decoder/debounceCounter/Mcount_Out_cy<1> (decoder/debounceCounter/Mcount_Out_cy<1>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<2> (decoder/debounceCounter/Mcount_Out_cy<2>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<3> (decoder/debounceCounter/Mcount_Out_cy<3>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<4> (decoder/debounceCounter/Mcount_Out_cy<4>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<5> (decoder/debounceCounter/Mcount_Out_cy<5>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<6> (decoder/debounceCounter/Mcount_Out_cy<6>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<7> (decoder/debounceCounter/Mcount_Out_cy<7>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<8> (decoder/debounceCounter/Mcount_Out_cy<8>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<9> (decoder/debounceCounter/Mcount_Out_cy<9>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<10> (decoder/debounceCounter/Mcount_Out_cy<10>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<11> (decoder/debounceCounter/Mcount_Out_cy<11>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<12> (decoder/debounceCounter/Mcount_Out_cy<12>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<13> (decoder/debounceCounter/Mcount_Out_cy<13>)
+     MUXCY:CI->O           0   0.065   0.000  decoder/debounceCounter/Mcount_Out_cy<14> (decoder/debounceCounter/Mcount_Out_cy<14>)
+     XORCY:CI->O           1   0.844   0.000  decoder/debounceCounter/Mcount_Out_xor<15> (decoder/Result<15>1)
+     FDCE:D                    0.252          decoder/debounceCounter/Out_0
     ----------------------------------------
-    Total                      4.207ns (3.617ns logic, 0.590ns route)
-                                       (86.0% logic, 14.0% route)
+    Total                      4.402ns (3.812ns logic, 0.590ns route)
+                                       (86.6% logic, 13.4% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'decoder/newValueDetected'
+  Clock period: 4.291ns (frequency: 233.046MHz)
+  Total number of paths / destination ports: 169 / 13
+-------------------------------------------------------------------------
+Delay:               4.291ns (Levels of Logic = 13)
+  Source:            decoder/positionCounter/Out_14 (FF)
+  Destination:       decoder/positionCounter/Out_3 (FF)
+  Source Clock:      decoder/newValueDetected rising
+  Destination Clock: decoder/newValueDetected rising
+
+  Data Path: decoder/positionCounter/Out_14 to decoder/positionCounter/Out_3
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             3   0.591   0.674  decoder/positionCounter/Out_14 (decoder/positionCounter/Out_14)
+     LUT2:I0->O            1   0.648   0.000  decoder/positionCounter/Mcount_Out_lut<1> (decoder/positionCounter/Mcount_Out_lut<1>)
+     MUXCY:S->O            1   0.632   0.000  decoder/positionCounter/Mcount_Out_cy<1> (decoder/positionCounter/Mcount_Out_cy<1>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<2> (decoder/positionCounter/Mcount_Out_cy<2>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<3> (decoder/positionCounter/Mcount_Out_cy<3>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<4> (decoder/positionCounter/Mcount_Out_cy<4>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<5> (decoder/positionCounter/Mcount_Out_cy<5>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<6> (decoder/positionCounter/Mcount_Out_cy<6>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<7> (decoder/positionCounter/Mcount_Out_cy<7>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<8> (decoder/positionCounter/Mcount_Out_cy<8>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<9> (decoder/positionCounter/Mcount_Out_cy<9>)
+     MUXCY:CI->O           1   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<10> (decoder/positionCounter/Mcount_Out_cy<10>)
+     MUXCY:CI->O           0   0.065   0.000  decoder/positionCounter/Mcount_Out_cy<11> (decoder/positionCounter/Mcount_Out_cy<11>)
+     XORCY:CI->O           1   0.844   0.000  decoder/positionCounter/Mcount_Out_xor<12> (decoder/Result<12>)
+     FDCE:D                    0.252          decoder/positionCounter/Out_3
+    ----------------------------------------
+    Total                      4.291ns (3.617ns logic, 0.674ns route)
+                                       (84.3% logic, 15.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'Clk_101'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              1.521ns (Levels of Logic = 1)
+  Source:            i_B (PAD)
+  Destination:       decoder/b_new_0 (FF)
+  Destination Clock: Clk_101 rising
+
+  Data Path: i_B to decoder/b_new_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.849   0.420  i_B_IBUF (i_B_IBUF)
+     FD:D                      0.252          decoder/b_new_0
+    ----------------------------------------
+    Total                      1.521ns (1.101ns logic, 0.420ns route)
+                                       (72.4% logic, 27.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'Clk_5'
@@ -560,14 +695,14 @@ Offset:              5.558ns (Levels of Logic = 1)
 
 
 Total REAL time to Xst completion: 6.00 secs
-Total CPU time to Xst completion: 5.90 secs
+Total CPU time to Xst completion: 5.89 secs
  
 --> 
 
 
-Total memory usage is 532220 kilobytes
+Total memory usage is 532840 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   18 (   0 filtered)
+Number of warnings :   38 (   0 filtered)
 Number of infos    :    1 (   0 filtered)
 

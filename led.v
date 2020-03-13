@@ -18,16 +18,17 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module led(Clk, Switch, SevenSegment, Enable
+module led(Clk, Switch, SevenSegment, Enable, i_A, i_B
     );
 	 
 	 input Clk;
 	 input [5:0] Switch;
+	 input i_A, i_B;
 	 output [7:0] SevenSegment;
 	 output [2:0] Enable;
 	 
-	 
-	 reg [12:0] value = 'd888;
+	 wire [12:0] w_value;
+	 reg [12:0] value = 'd500;
 	 reg [15:0] r_displayValue = 'd0;
 	 reg [2:0] r_Enable = 'd0;
 	 reg [7:0] r_SevenSegment ='d0;
@@ -69,7 +70,7 @@ case bcd is
 	 Binary_to_BCD		#(.INPUT_WIDTH('d13),
 							.DECIMAL_DIGITS('d4))
 		converter		(.i_Clock(Clk),
-							.i_Binary(value),
+							.i_Binary(w_value),
 							.i_Start('b1),
 							.o_BCD(bcdValue),
 							.o_DV(DV));
@@ -113,19 +114,24 @@ case bcd is
 	 reg [23:0] counter;
 	 wire o_Clk_5;
 	 reg Clk_23;
+	 reg Clk_10;
+	 wire w_Clk_10;
+	 assign w_Clk_10 = Clk_10;
 	 
 	 always@(posedge Clk)
 	 begin
 		counter <= counter+1;			
 		Clk_5 <= counter[15];
 		Clk_23 <= counter[23];
+		Clk_10 <= counter[10];
 	 end
 	 
-	 always@(posedge Clk_23)
-	 begin			
-		value <= value+1;
-		start <=1;
-	 end
+//	 always@(posedge i_A)
+//	 begin
+//		value <= value + 1;
+//	 end
+	 
+//	 assign w_value = value;
 //	 always@(posedge Clk_5)
 //	 begin
 //		start <= 1;
@@ -133,6 +139,10 @@ case bcd is
 //	 end
 	 
 	 assign o_Clk_5 = Clk_5;
+	 
+	 wire w_Direction;
+	 quadDecode decoder(.a(i_A), .b(i_B), .clk(w_Clk_10), .direction(w_Direction), .position(w_value));
+	 
 	 
 	 always@(posedge o_Clk_5)
 	 begin

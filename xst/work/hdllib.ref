@@ -1,2 +1,4 @@
-MO led NULL led.v vlg69/led.bin 1583938505
-MO Binary_to_BCD NULL ../../quadDec/Binary_to_BCD.v vlg03/_binary__to___b_c_d.bin 1583938505
+MO led NULL led.v vlg69/led.bin 1584027784
+MO Binary_to_BCD NULL ../../quadDec/Binary_to_BCD.v vlg03/_binary__to___b_c_d.bin 1584027784
+MO counter NULL ../../quadDec/counter.v vlg10/counter.bin 1584027784
+MO quadDecode NULL ../../quadDec/quadDecode.v vlg2B/quad_decode.bin 1584027784

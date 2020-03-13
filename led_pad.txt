@@ -1,7 +1,7 @@
 Release 14.7 - par P.20131013 (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
-Wed Mar 11 21:55:31 2020
+Thu Mar 12 22:43:30 2020
 
 
 INFO: The IO information is provided in three file formats as part of the Place and Route (PAR) process.  These formats are:
@@ -142,9 +142,9 @@ Pinout by Pin Number:
 |P120      |Enable<0>      |IOB       |IO_L05P_0             |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |NONE**     |         |         |LOCATED   |NO         |NONE            |
 |P121      |Enable<1>      |IOB       |IO_L05N_0             |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |NONE**     |         |         |LOCATED   |NO         |NONE            |
 |P122      |               |          |VCCINT                |         |           |              |          |         |           |         |1.2      |          |           |                |
-|P123      |               |IBUF      |IP_0/VREF_0           |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
+|P123      |i_B            |IBUF      |IP_0/VREF_0           |INPUT    |LVCMOS33   |0             |          |         |PULLUP     |IBUF     |         |LOCATED   |NO         |NONE            |
 |P124      |Enable<2>      |IOB       |IO_L06P_0/GCLK4       |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |NONE**     |         |         |LOCATED   |NO         |NONE            |
-|P125      |               |DIFFMTB   |IO_L07P_0/GCLK6       |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
+|P125      |i_A            |IBUF      |IO_L07P_0/GCLK6       |INPUT    |LVCMOS33   |0             |          |         |PULLUP     |IBUF     |         |LOCATED   |NO         |NONE            |
 |P126      |               |DIFFSTB   |IO_L06N_0/GCLK5       |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |P127      |               |DIFFSTB   |IO_L07N_0/GCLK7       |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |P128      |               |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |

@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2020-03-11T21:55:00</DateModified>
+  <DateModified>2020-03-12T21:50:21</DateModified>
   <ModuleName>led</ModuleName>
-  <SummaryTimeStamp>2020-03-11T21:49:12</SummaryTimeStamp>
+  <SummaryTimeStamp>2020-03-12T20:59:22</SummaryTimeStamp>
   <SavedFilePath>/home/kuro/Documents/FPGA/ElbertV2/ledTest/iseconfig/led.xreport</SavedFilePath>
   <ImplementationReportsDirectory>/home/kuro/Documents/FPGA/ElbertV2/ledTest/</ImplementationReportsDirectory>
   <DateInitialized>2020-03-10T14:29:09</DateInitialized>

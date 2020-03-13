@@ -57,9 +57,7 @@
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_BITGEN_REPORT" xil_pn:name="led.ut" xil_pn:subbranch="FPGAConfiguration"/>
     <file xil_pn:fileType="FILE_XPI" xil_pn:name="led.xpi"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="led.xst"/>
-    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="ledTb2_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="ledTb2_isim_beh.exe"/>
-    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="ledTb2_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="led_envsettings.html"/>
     <file xil_pn:fileType="FILE_NCD" xil_pn:name="led_guide.ncd" xil_pn:origination="imported"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_MAP_REPORT" xil_pn:name="led_map.map" xil_pn:subbranch="Map"/>
@@ -75,6 +73,10 @@
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="led_summary.xml"/>
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="led_usage.xml"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="led_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="testInputControl_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="testInputControl_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="testInputControl_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="testInputControl_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="usage_statistics_webtalk.html"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="webtalk.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
@@ -84,24 +86,26 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1583938375" xil_pn:in_ck="2109325208346035315" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1583938375">
+    <transform xil_pn:end_ts="1584020361" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1584020361">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1584020362" xil_pn:in_ck="4440337611130102620" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1584020361">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputAdded"/>
       <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="../../bcdAdder/bcdAdder.v"/>
-      <outfile xil_pn:name="../../quadDec/Binary_to_BCD.v"/>
-      <outfile xil_pn:name="led.v"/>
-      <outfile xil_pn:name="ledTb.v"/>
-      <outfile xil_pn:name="ledTb2.v"/>
+      <status xil_pn:value="OutputRemoved"/>
     </transform>
-    <transform xil_pn:end_ts="1583938019" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="5681848661696519476" xil_pn:start_ts="1583938019">
+    <transform xil_pn:end_ts="1584020370" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="1652538252866574216" xil_pn:start_ts="1584020370">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1583938019" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-352433630286747332" xil_pn:start_ts="1583938019">
+    <transform xil_pn:end_ts="1584020370" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-8868828761382371824" xil_pn:start_ts="1584020370">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
@@ -109,44 +113,39 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1583938375" xil_pn:in_ck="2109325208346035315" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1583938375">
+    <transform xil_pn:end_ts="1584020370" xil_pn:in_ck="4440337611130102620" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1584020370">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="../../bcdAdder/bcdAdder.v"/>
-      <outfile xil_pn:name="../../quadDec/Binary_to_BCD.v"/>
-      <outfile xil_pn:name="led.v"/>
-      <outfile xil_pn:name="ledTb.v"/>
-      <outfile xil_pn:name="ledTb2.v"/>
+      <status xil_pn:value="OutputRemoved"/>
     </transform>
-    <transform xil_pn:end_ts="1583938378" xil_pn:in_ck="2109325208346035315" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-5771853672588081467" xil_pn:start_ts="1583938375">
+    <transform xil_pn:end_ts="1584020374" xil_pn:in_ck="4440337611130102620" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="5580347282813184557" xil_pn:start_ts="1584020370">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="NotReadyToRun"/>
       <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="fuse.log"/>
-      <outfile xil_pn:name="isim"/>
-      <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="ledTb2_beh.prj"/>
-      <outfile xil_pn:name="ledTb2_isim_beh.exe"/>
-      <outfile xil_pn:name="xilinxsim.ini"/>
+      <status xil_pn:value="OutputRemoved"/>
     </transform>
-    <transform xil_pn:end_ts="1583938378" xil_pn:in_ck="2651317425783614988" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="1552257337461229352" xil_pn:start_ts="1583938378">
+    <transform xil_pn:end_ts="1584020374" xil_pn:in_ck="4399249055897684460" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="6360587961364295120" xil_pn:start_ts="1584020374">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputRemoved"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="isim.cmd"/>
-      <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="ledTb2_isim_beh.wdb"/>
+      <status xil_pn:value="OutputRemoved"/>
     </transform>
     <transform xil_pn:end_ts="1583935793" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1583935793">
       <status xil_pn:value="SuccessfullyRun"/>
@@ -176,7 +175,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1583938511" xil_pn:in_ck="-7807911411780242205" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-4300442006873841355" xil_pn:start_ts="1583938501">
+    <transform xil_pn:end_ts="1584027790" xil_pn:in_ck="4262780013956849734" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-4300442006873841355" xil_pn:start_ts="1584027780">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -190,16 +189,15 @@
       <outfile xil_pn:name="led.stx"/>
       <outfile xil_pn:name="led.syr"/>
       <outfile xil_pn:name="led.xst"/>
-      <outfile xil_pn:name="ledTb2_beh.prj"/>
       <outfile xil_pn:name="led_xst.xrpt"/>
       <outfile xil_pn:name="webtalk_pn.xml"/>
       <outfile xil_pn:name="xst"/>
     </transform>
-    <transform xil_pn:end_ts="1583935800" xil_pn:in_ck="6525436470249455364" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="3734212952602903" xil_pn:start_ts="1583935799">
+    <transform xil_pn:end_ts="1584021516" xil_pn:in_ck="6525436470249455364" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="3734212952602903" xil_pn:start_ts="1584021516">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1583938517" xil_pn:in_ck="8841020080713287903" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="-3263565443023064187" xil_pn:start_ts="1583938511">
+    <transform xil_pn:end_ts="1584027796" xil_pn:in_ck="8841020080713287903" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="-3263565443023064187" xil_pn:start_ts="1584027790">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="_ngo"/>
@@ -208,7 +206,7 @@
       <outfile xil_pn:name="led.ngd"/>
       <outfile xil_pn:name="led_ngdbuild.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1583938524" xil_pn:in_ck="8841020080713287904" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="1761500947287708787" xil_pn:start_ts="1583938517">
+    <transform xil_pn:end_ts="1584027803" xil_pn:in_ck="8841020080713287904" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="1761500947287708787" xil_pn:start_ts="1584027796">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -224,7 +222,7 @@
       <outfile xil_pn:name="led_summary.xml"/>
       <outfile xil_pn:name="led_usage.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1583938536" xil_pn:in_ck="-9021473365049669639" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="4891759239423368658" xil_pn:start_ts="1583938524">
+    <transform xil_pn:end_ts="1584027815" xil_pn:in_ck="-9021473365049669639" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="4891759239423368658" xil_pn:start_ts="1584027803">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -239,7 +237,7 @@
       <outfile xil_pn:name="led_pad.txt"/>
       <outfile xil_pn:name="led_par.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1583938712" xil_pn:in_ck="143551583704" xil_pn:name="TRANEXT_bitFile_spartan3a" xil_pn:prop_ck="1406129783654645690" xil_pn:start_ts="1583938705">
+    <transform xil_pn:end_ts="1584027836" xil_pn:in_ck="143551583704" xil_pn:name="TRANEXT_bitFile_spartan3a" xil_pn:prop_ck="1406129783654645690" xil_pn:start_ts="1584027830">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -253,7 +251,7 @@
       <outfile xil_pn:name="webtalk.log"/>
       <outfile xil_pn:name="webtalk_pn.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1583938536" xil_pn:in_ck="8841020080713287772" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1583938532">
+    <transform xil_pn:end_ts="1584027815" xil_pn:in_ck="8841020080713287772" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1584027811">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="_xmsgs/trce.xmsgs"/>

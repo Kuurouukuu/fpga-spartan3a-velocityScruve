@@ -1,15 +1,12 @@
 //! **************************************************************************
-// Written by: Map P.20131013 on Wed Mar 11 21:55:22 2020
+// Written by: Map P.20131013 on Thu Mar 12 22:43:21 2020
 //! **************************************************************************
 
 SCHEMATIC START;
 CONFIG VCCAUX = "3.3";
-COMP "Switch<0>" LOCATE = SITE "P80" LEVEL 1;
-COMP "Switch<1>" LOCATE = SITE "P79" LEVEL 1;
-COMP "Switch<2>" LOCATE = SITE "P78" LEVEL 1;
-COMP "Switch<3>" LOCATE = SITE "P77" LEVEL 1;
-COMP "Switch<4>" LOCATE = SITE "P76" LEVEL 1;
-COMP "Switch<5>" LOCATE = SITE "P75" LEVEL 1;
+COMP "Clk" LOCATE = SITE "P129" LEVEL 1;
+COMP "i_A" LOCATE = SITE "P125" LEVEL 1;
+COMP "i_B" LOCATE = SITE "P123" LEVEL 1;
 COMP "SevenSegment<0>" LOCATE = SITE "P114" LEVEL 1;
 COMP "SevenSegment<1>" LOCATE = SITE "P110" LEVEL 1;
 COMP "SevenSegment<2>" LOCATE = SITE "P111" LEVEL 1;
@@ -18,10 +15,15 @@ COMP "SevenSegment<4>" LOCATE = SITE "P113" LEVEL 1;
 COMP "SevenSegment<5>" LOCATE = SITE "P115" LEVEL 1;
 COMP "SevenSegment<6>" LOCATE = SITE "P116" LEVEL 1;
 COMP "SevenSegment<7>" LOCATE = SITE "P117" LEVEL 1;
-COMP "Clk" LOCATE = SITE "P129" LEVEL 1;
 COMP "Enable<0>" LOCATE = SITE "P120" LEVEL 1;
 COMP "Enable<1>" LOCATE = SITE "P121" LEVEL 1;
 COMP "Enable<2>" LOCATE = SITE "P124" LEVEL 1;
+COMP "Switch<0>" LOCATE = SITE "P80" LEVEL 1;
+COMP "Switch<1>" LOCATE = SITE "P79" LEVEL 1;
+COMP "Switch<2>" LOCATE = SITE "P78" LEVEL 1;
+COMP "Switch<3>" LOCATE = SITE "P77" LEVEL 1;
+COMP "Switch<4>" LOCATE = SITE "P76" LEVEL 1;
+COMP "Switch<5>" LOCATE = SITE "P75" LEVEL 1;
 NET "Clk_BUFGP/IBUFG" PERIOD = 83.3333333 ns HIGH 50%;
 SCHEMATIC END;
 
