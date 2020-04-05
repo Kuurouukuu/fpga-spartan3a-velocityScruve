@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, LED
+module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, LED
     );
 	 
 	input Clk;
@@ -41,7 +41,7 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 	wire [15:0] bcdValue;
 	wire [15:0] w_velocity;
 	wire [12:0] w_position;
-	wire debounced_kp, debounced_ki, debounced_kd;
+	wire debounced_kp, debounced_ki, debounced_kd, debounced_hold;
 	wire debounced_A, debounced_B;
 	wire [15:0] w_un;
 	wire w_pwm_out;	
@@ -68,14 +68,18 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 	reg [23:0] counter; 
 	
 	
-	quad decoder(.quadA(debounced_A), .quadB(debounced_B), .clk(Clk), .count(w_position), .rst(~Switch[0]), .o_velocity(w_velocity));
+	quad decoder(.quadA(debounced_A), .quadB(debounced_B), .clk(Clk), .count(w_position), .rst(~debounced_reset), .o_velocity(w_velocity));
+	
 	DeBounce debouncerA(.clk(Clk), .button_in(i_A), .DB_out(debounced_A), .n_reset('b1));
 	DeBounce debouncerB(.clk(Clk), .button_in(i_B), .DB_out(debounced_B), .n_reset('b1));
-	DeBounce debouncer1(.clk(Clk), .button_in(Switch[2]), .DB_out(debounced_increaseKp), .n_reset('b1));
-	DeBounce debouncer2(.clk(Clk), .button_in(Switch[3]), .DB_out(debounced_decreaseKp), .n_reset('b1));
-	DeBounce debouncer3(.clk(Clk), .button_in(Switch[4]), .DB_out(debounced_increaseKi), .n_reset('b1));
-	DeBounce debouncer4(.clk(Clk), .button_in(Switch[5]), .DB_out(debounced_decreaseKi), .n_reset('b1));
-	PID pidController(.i_clk(Clk), .i_rst(~Switch[1]), .o_un(w_un), .o_valid(w_pidValid), .sp(w_setpoint), .pv(w_position), .kp(r_kp), .kd(r_kd), .ki(r_ki));
+	DeBounce debouncer0(.clk(Clk), .button_in(Switch[0]), .DB_out(debounced_reset), .n_reset('b1));
+	DeBounce debouncer1(.clk(Clk), .button_in(Switch[1]), .DB_out(debounced_hold), .n_reset('b1));
+	DeBounce debouncer2(.clk(Clk), .button_in(Switch[2]), .DB_out(debounced_increaseKp), .n_reset('b1));
+	DeBounce debouncer3(.clk(Clk), .button_in(Switch[3]), .DB_out(debounced_decreaseKp), .n_reset('b1));
+	DeBounce debouncer4(.clk(Clk), .button_in(Switch[4]), .DB_out(debounced_increaseKi), .n_reset('b1));
+	DeBounce debouncer5(.clk(Clk), .button_in(Switch[5]), .DB_out(debounced_decreaseKi), .n_reset('b1));
+	
+	PID pidController(.i_clk(Clk), .i_rst(~debounced_reset), .o_un(w_un), .o_valid(w_pidValid), .sp(w_setpoint), .pv(w_velocity), .kp(r_kp), .kd(r_kd), .ki(r_ki));
 	pwm pwmGenerator(.Clk(Clk), .pwm_in(w_un), .pwm_out(w_pwm_out));
 	Binary_to_BCD #(.INPUT_WIDTH('d13), .DECIMAL_DIGITS('d4))
 			converter	(.i_Clock(Clk),
@@ -87,7 +91,10 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 	 // Update display value when the bcd converter output is ready 
 	 always@(posedge DV)
 	 begin
-		r_displayValue <= bcdValue;
+		if (~debounced_hold)
+			r_displayValue <= r_displayValue;
+		else
+			r_displayValue <= bcdValue;
 	 end
 	 
 	 // Frequency division using counter
@@ -175,11 +182,11 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 	always@*
 	begin
 		case (DPSwitch[4:1])
-			4'b0001: w_setpoint = 'd374;
-			4'b0010: w_setpoint = 'd748;
-			4'b0100: w_setpoint = 'd1122;
-			4'b1000: w_setpoint = 'd195;
-			default: w_setpoint = 'd999;	
+			4'b0001: w_setpoint = 'd75;
+			4'b0010: w_setpoint = 'd175;
+			4'b0100: w_setpoint = 'd50;
+			4'b1000: w_setpoint = 'd100;
+			default: w_setpoint = 'd150;		
 		endcase
 	end
 
@@ -206,8 +213,8 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 		end
 	
 	
-	// Check error and fire PWM based on error.
-	always @(posedge Clk)
+	// Check error and fire PWM based on error. Position case 
+	/*always @(posedge Clk)
 	 begin
 		if ((w_position<14'd50) &&  (r_error_unsigned<14'd50))
 			begin
@@ -219,7 +226,7 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 					r_controllerPin <= w_PWM_CW;
 					r_LED <= 'b00000010;
 				end
-		else if ((w_error>16'b1111__1010_0010_1000)&&(w_error<16'b1111_1111_1111_0110))// Error is between -0.4 and -360
+		else if ((w_error>16'b1111__1110_0010_1000)&&(w_error<16'b1111_1111_1111_1110))// Error is between -0.4 and -360
 				begin 
 					r_controllerPin <= w_PWM_CCW;
 					r_LED <= 'b00000100;
@@ -229,13 +236,40 @@ module led(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, 
 					r_controllerPin <= 2'd0;
 					r_LED <= 'b00001000;
 				end
+	 end*/
+	 
+	 //Check error and fire PWM based on error. Velocity case 	 
+	 always @(posedge Clk)
+	 begin
+		if ((w_velocity<14'd10) &&  (r_error_unsigned<14'd3))
+			begin
+				r_controllerPin<=2'd0;
+				r_LED <= 'b00000001;
+			end
+		else if (w_error[15] == 'b1)// Error is negative, rotate too fast
+				begin 
+					r_controllerPin <= 'b00; // Keep turning anyway, because of Ki
+					r_LED <= 'b00000100;
+				end
+		else // Error is between 5 and 320 rpm
+				begin 
+					r_controllerPin <= w_PWM_CW;
+					r_LED <= 'b00000010;
+				end
+/*		else
+				begin
+					r_controllerPin <= 2'd0;
+					r_LED <= 'b00001000;
+				end*/
 	 end
 
+	
+	
 	// Assignment section
 	
-	assign w_error = w_setpoint - w_position; // control Velocity first TODO: generalize, control position	
+	assign w_error = w_setpoint - w_velocity; // control Velocity first TODO: generalize, control position	
 	assign w_PWM_CW[1:0]={w_pwm_out,1'b0}; // Concatenation 2 output for 2 port
-	assign w_value = DPSwitch[0] ? w_position : w_setpoint;
+	assign w_value = DPSwitch[0] ? w_velocity : w_setpoint;
 	assign w_PWM_CCW[1:0]={1'b0,w_pwm_out};
 	assign w_Clk_5 = Clk_5;
 	assign SevenSegment = r_SevenSegment;

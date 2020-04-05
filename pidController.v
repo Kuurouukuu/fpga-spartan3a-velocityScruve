@@ -139,6 +139,10 @@ always@(posedge i_clk or posedge i_rst)
 			state_1 <= 10'b0000000001;
 			w_valid <= 'b1;
 		end
+		
+		default:
+			state_1 <= 10'b0000000001;
+			
 		endcase
 	end
 

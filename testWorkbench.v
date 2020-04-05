@@ -26,6 +26,7 @@ module testWorkbench;
 
 	// Inputs
 	reg i_clk;
+	reg i_reset;
 	reg [15:0] i_value;
 
 	// Outputs
@@ -33,7 +34,8 @@ module testWorkbench;
 
 	// Instantiate the Unit Under Test (UUT)
 	workbench uut (
-		.i_clk(i_clk), 
+		.i_clk(i_clk),
+		.i_reset(i_reset),
 		.i_value(i_value),  
 		.o_value(o_value)
 	);
@@ -42,20 +44,30 @@ module testWorkbench;
 		// Initialize Inputs
 		i_clk = 0;
 		i_value = 0;
+		i_reset = 0;
 
 		// Wait 100 ns for global reset to finish
-		#100;      
+		#100     
 		forever #1 i_clk = ~i_clk;
 		// Add stimulus here
 
 	end
 	
 	initial begin
-	#100
-	
-	i_value = 88;
-	#10
-	i_value = 66;
+	#90
+	i_reset = 1;
+	#5
+	i_reset = 0;
+	#5	
+	i_value = 8;
+	repeat(20) begin
+		#5
+		i_value = i_value*0.9 - 'd10;
+		if ( (i_value > 'd1496) && (i_value < 'b0111_1111_1111_111) ) 
+			i_value = i_value - 'd1496;
+		if ( (i_value < 'b1111_1111_1111_1111) && ( i_value > 'b1000_0000_0000_000))
+			i_value = i_value + 'd1496;
+	end
 	
 	
 	end
