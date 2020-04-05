@@ -1,4 +1,0 @@
-verilog work "../../quadDec/counter.v"
-verilog work "../../quadDec/quadDecode.v"
-verilog work "../../quadDec/Binary_to_BCD.v"
-verilog work "led.v"
