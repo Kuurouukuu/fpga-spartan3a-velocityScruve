@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module quad(clk, quadA, quadB, count, rst, o_velocity);
+module quad2(clk, quadA, quadB, count, rst, o_velocity);
 input clk, quadA, quadB, rst;
 output [15:0] count;
 output [15:0] o_velocity;
@@ -60,8 +60,8 @@ begin
 		  begin
 			if(count_direction) count<=count+1; else count<=count-1;
 			 if (count == 1497)
-				count <= 0;
-			 else if (count == 'b1111_1111_1111_1111)
+				count <= 'd0;
+			 else if (count == -'d1)
 				count <= 1496;
 		  end
 	  end
@@ -87,7 +87,7 @@ begin
 	end
 end
 
-assign w_diff = (r_count >= r_countPrev) ? (r_count - r_countPrev) : (r_count + 'd1496 - r_countPrev);
+assign w_diff = (r_count >= r_countPrev) ? (r_count - r_countPrev) : (r_countPrev - r_count);
 
 //(count_direction) ? ((r_count >= r_countPrev)	?	(r_count - r_countPrev) : (r_count + 11'd1496 - r_countPrev))
 //											 : ((r_count <= r_countPrev)	?	(r_countPrev - r_count) : (r_countPrev + 11'd1496 - r_count));

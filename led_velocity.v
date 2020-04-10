@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, LED
+module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_controlPin, LED, o_uart_tx
     );
 	 
 	input Clk;
@@ -29,6 +29,7 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	output [7:0] SevenSegment;
 	output [2:0] Enable;
 	output [7:0] LED;
+	output o_uart_tx;
 
 	parameter [1:0] s_Segment1 = 'd1, s_Segment2 = 'd2, s_Segment3 = 'd3, s_Idle = 'd0;
 	parameter [5:0] button1 = 'b111110, button2 = 'b111101, button3 = 'b111011, button4 = 'b110111, button5 = 'b101111, button6 = 'b011111;
@@ -65,19 +66,19 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	reg [7:0] r_SevenSegment ='d0;
 	reg [1:0] s_Main = s_Idle;
 	reg Clk_5;
-	reg [23:0] counter; 
+	reg [23:0] counter = 'd0; 
 	
 	
 	quad decoder(.quadA(debounced_A), .quadB(debounced_B), .clk(Clk), .count(w_position), .rst(~debounced_reset), .o_velocity(w_velocity));
 	
-	DeBounce debouncerA(.clk(Clk), .button_in(i_A), .DB_out(debounced_A), .n_reset('b1));
-	DeBounce debouncerB(.clk(Clk), .button_in(i_B), .DB_out(debounced_B), .n_reset('b1));
-	DeBounce debouncer0(.clk(Clk), .button_in(Switch[0]), .DB_out(debounced_reset), .n_reset('b1));
-	DeBounce debouncer1(.clk(Clk), .button_in(Switch[1]), .DB_out(debounced_hold), .n_reset('b1));
-	DeBounce debouncer2(.clk(Clk), .button_in(Switch[2]), .DB_out(debounced_increaseKp), .n_reset('b1));
-	DeBounce debouncer3(.clk(Clk), .button_in(Switch[3]), .DB_out(debounced_decreaseKp), .n_reset('b1));
-	DeBounce debouncer4(.clk(Clk), .button_in(Switch[4]), .DB_out(debounced_increaseKi), .n_reset('b1));
-	DeBounce debouncer5(.clk(Clk), .button_in(Switch[5]), .DB_out(debounced_decreaseKi), .n_reset('b1));
+	DeBounce debouncerA(.clk(Clk), .button_in(i_A), .DB_out(debounced_A), .n_reset(1'b1));
+	DeBounce debouncerB(.clk(Clk), .button_in(i_B), .DB_out(debounced_B), .n_reset(1'b1));
+	DeBounce debouncer0(.clk(Clk), .button_in(Switch[0]), .DB_out(debounced_reset), .n_reset(1'b1));
+	DeBounce debouncer1(.clk(Clk), .button_in(Switch[1]), .DB_out(debounced_hold), .n_reset(1'b1));
+	DeBounce debouncer2(.clk(Clk), .button_in(Switch[2]), .DB_out(debounced_increaseKp), .n_reset(1'b1));
+	DeBounce debouncer3(.clk(Clk), .button_in(Switch[3]), .DB_out(debounced_decreaseKp), .n_reset(1'b1));
+	DeBounce debouncer4(.clk(Clk), .button_in(Switch[4]), .DB_out(debounced_increaseKi), .n_reset(1'b1));
+	DeBounce debouncer5(.clk(Clk), .button_in(Switch[5]), .DB_out(debounced_decreaseKi), .n_reset(1'b1));
 	
 	PID pidController(.i_clk(Clk), .i_rst(~debounced_reset), .o_un(w_un), .o_valid(w_pidValid), .sp(w_setpoint), .pv(w_velocity), .kp(r_kp), .kd(r_kd), .ki(r_ki));
 	pwm pwmGenerator(.Clk(Clk), .pwm_in(w_un), .pwm_out(w_pwm_out));
@@ -277,5 +278,33 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	assign LED = {r_controllerPin, r_LED[5:0]};
 	assign o_controlPin = r_controllerPin;
 	assign Enable = r_Enable;
+
+
+//NOT YET DEBUG: Implement Uart module for communication
+	reg [31:0] r_uart_data_in, r_uart_data_prev;
+	reg r_uart_update = 'b0, r_uart_update_prev;
+	wire w_uart_write;
+	
+	
+	always@(posedge w_Clk_10)
+	begin
+		r_uart_data_in <= w_velocity;
+		r_uart_update <= ~r_uart_update;
+	end
+	
+	always@(posedge Clk)
+	begin
+		r_uart_update_prev <= r_uart_update;			
+	end
+
+	assign w_uart_write = ~(r_uart_update_prev == r_uart_update); // If there is change, high for one cycle
+
+	uart_top myUart( 	.tx(o_uart_tx),
+				.data_in(r_uart_data_in),
+				.address(r_uart_address),
+				.i_wr_uart(w_uart_write),
+				.clk(Clk),
+				.reset('b0)
+			);
 
 endmodule

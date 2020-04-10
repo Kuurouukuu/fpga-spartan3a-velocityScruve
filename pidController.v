@@ -150,15 +150,25 @@ wire ready;
 
 assign o_un = un;
 
-multiplier_16x16bit_pipelined	multiplier_16x16bit_pipelined(
-i_clk,
-~i_rst,
-start,
-md,
-mr,
-product,
-ready
+//multiplier_16x16bit_pipelined	multiplier_16x16bit_pipelined(
+//i_clk,
+//~i_rst,
+//start,
+//md,
+//mr,
+//product,
+//ready
+//);
+
+multiplier myMultiplier(
+	.clk(i_clk),
+	.sclr(i_rst),
+	.ce('b1),
+	.a(md),
+	.b(mr),
+	.p(product)
 );
+
 
 adder_32bit	adder_32bit_0(
 a,

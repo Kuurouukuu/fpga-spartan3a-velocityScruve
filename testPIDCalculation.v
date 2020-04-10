@@ -29,6 +29,7 @@ module testPIDCalculation;
 	reg i_rst;
 	reg [15:0] sp;
 	reg [15:0] pv;
+	reg [15:0] kp, ki, kd;
 
 	// Outputs
 	wire [15:0] o_un;
@@ -41,7 +42,10 @@ module testPIDCalculation;
 		.o_un(o_un), 
 		.o_valid(o_valid), 
 		.sp(sp), 
-		.pv(pv)
+		.pv(pv),
+		.kp(kp),
+		.kd(kd),
+		.ki(ki)
 	);
 
 	initial begin
@@ -56,10 +60,20 @@ module testPIDCalculation;
       i_rst = 0;
 		sp = 450;
 		pv = 300;
+		kp = 5;
+		ki = 0;
+		kd = 0;
 		forever #1 i_clk = ~i_clk;
 		// Add stimulus here
 
 	end
+	
+	initial begin
+		#110
+		sp = 450;
+		pv = 150;
+	end
+		
       
 endmodule
 
