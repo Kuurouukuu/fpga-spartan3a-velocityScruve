@@ -30,9 +30,10 @@ module testPIDCalculation;
 	reg [15:0] sp;
 	reg [15:0] pv;
 	reg [15:0] kp, ki, kd;
+	
 
 	// Outputs
-	wire [15:0] o_un;
+	wire [31:0] o_un;
 	wire o_valid;
 
 	// Instantiate the Unit Under Test (UUT)
@@ -60,20 +61,30 @@ module testPIDCalculation;
       i_rst = 0;
 		sp = 450;
 		pv = 300;
-		kp = 5;
-		ki = 0;
+		kp = 1;
+		ki = 10;
 		kd = 0;
 		forever #1 i_clk = ~i_clk;
 		// Add stimulus here
 
 	end
+
+	reg [3:0] counter = 'd0, counter_next = 'd0;
 	
-	initial begin
-		#110
-		sp = 450;
-		pv = 150;
+	always@(posedge i_clk)
+	begin
+		counter <= counter_next;
 	end
-		
-      
+   
+
+	always@*
+		if (counter == 9)
+		begin
+			counter_next = 0;
+			pv = pv + 'd30;
+		end
+		else
+			counter_next = counter + 'd1;
+	
 endmodule
 

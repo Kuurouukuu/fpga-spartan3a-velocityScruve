@@ -82,7 +82,7 @@ def main():
     xmin = 0
     xmax = maxPlotLength
     ymin = -2
-    ymax = 500
+    ymax = 5000000000
     fig = plt.figure()
     ax = plt.axes(xlim=(xmin, xmax), ylim=(float(ymin - (ymax - ymin) / 10), float(ymax + (ymax - ymin) / 10)))
     ax.set_title('Speed of DC Servo')

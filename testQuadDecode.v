@@ -4,15 +4,15 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   21:55:16 04/08/2020
-// Design Name:   uartTest
-// Module Name:   /home/kuro/Documents/FPGA/ElbertV2/ledTest/uartTb.v
+// Create Date:   08:51:17 04/16/2020
+// Design Name:   quadDecode
+// Module Name:   /home/kuro/Documents/FPGA/ElbertV2/ledTest/testQuadDecode.v
 // Project Name:  ledTest
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: uartTest
+// Verilog Test Fixture created by ISE for module: quadDecode
 //
 // Dependencies:
 // 
@@ -22,48 +22,44 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module uartTb;
+module testQuadDecode;
 
 	// Inputs
+	reg i_A;
+	reg i_B;
 	reg Clk;
-	reg [31:0] i_data;
-	reg rst;
+	reg i_sClr;
+	reg i_setOrigin;
 
 	// Outputs
-	wire o_uart_tx;
+	wire o_Direction;
+	wire [0:15] o_Position;
 
 	// Instantiate the Unit Under Test (UUT)
-	uartTest uut (
+	quadDecode uut (
+		.i_A(i_A), 
+		.i_B(i_B), 
 		.Clk(Clk), 
-		.i_data(i_data), 
-		.o_uart_tx(o_uart_tx),
-		.rst(rst)
+		.i_sClr(i_sClr), 
+		.i_setOrigin(i_setOrigin), 
+		.o_Direction(o_Direction), 
+		.o_Position(o_Position)
 	);
 
 	initial begin
 		// Initialize Inputs
+		i_A = 0;
+		i_B = 0;
 		Clk = 0;
-		i_data = 0;
-		rst = 1;
+		i_sClr = 0;
+		i_setOrigin = 0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-		rst = 0;
-		i_data = 32'd123455;
-      forever #1 Clk = ~Clk;
+        
 		// Add stimulus here
-		
+
 	end
-	
-	reg [20:0] counter = 'd0;
-	always@(Clk)
-	begin
-		counter <= counter + 1;
-	end
-	
-	always@(posedge counter[10])
-	begin
-		i_data <= i_data + 32'd123455;
-	end      
+      
 endmodule
 

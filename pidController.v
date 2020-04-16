@@ -1,14 +1,15 @@
 /*This is my PID controller, based on an OpenCores project */
 
-module PID(i_clk, i_rst, o_un, o_valid, sp, pv, kp, ki, kd);
+module PID(i_clk, i_rst, o_un, o_valid, sp, pv, kp, ki, kd, overflow);
 
 input i_clk;
 input i_rst;
 input [15:0] kp, ki, kd;
 input [15:0] sp, pv;
 
-output [15:0] o_un;
+output [31:0] o_un;
 output o_valid;
+output reg overflow;
 
 
 
@@ -115,7 +116,7 @@ always@(posedge i_clk or posedge i_rst)
 		10'b0001000000: begin
 			mr_index <= 0;
 			md_index <= 0;
-			start <= 0;
+			//start <= 0;
 			p <= product;
 			a <= sigma;
 			state_1 <= 10'b0010000000;
@@ -125,6 +126,7 @@ always@(posedge i_clk or posedge i_rst)
 			a <= sum;
 			sigma <= sum;
 			p <= product;
+			//start <= 0;
 			state_1 <= 10'b0100000000;
 		end
 
@@ -134,8 +136,18 @@ always@(posedge i_clk or posedge i_rst)
 			state_1 <= 10'b1000000000;
 		end
 
-		10'b1000000000: begin
-			un <= sum;
+		10'b1000000000: begin //negative value
+		//What happened if negative value?
+//			if (sum[31] == 1)
+//			begin
+//				un <= un; //retain this value
+//				overflow <= 'b1;
+//			end
+//			else
+//			begin
+//				overflow <= 'b0;
+				un <= sum;
+//			end
 			state_1 <= 10'b0000000001;
 			w_valid <= 'b1;
 		end
@@ -163,7 +175,7 @@ assign o_un = un;
 multiplier myMultiplier(
 	.clk(i_clk),
 	.sclr(i_rst),
-	.ce('b1),
+	.ce(start),
 	.a(md),
 	.b(mr),
 	.p(product)

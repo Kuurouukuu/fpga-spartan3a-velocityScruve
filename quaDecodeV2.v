@@ -67,14 +67,11 @@ begin
 	  end
 end
 
-//DEBUG: help
-//assign o_velocity = 'd115;
-
-assign w_Clk_7 = r_Counter[16]; // Divide by 2^17
+assign w_Clk_7 = r_Counter[16]; // Divide by 2^17, generate 11ms sampling time
 
 reg [15:0] r_count, r_countPrev;
 
-always @(posedge w_Clk_7, posedge rst)
+always @(posedge w_Clk_7, posedge rst) // each 11ms
 begin	
    if (rst)
 	begin
@@ -88,16 +85,13 @@ begin
 end
 
 assign w_diff = (r_count >= r_countPrev) ? (r_count - r_countPrev) : (r_count + 'd1496 - r_countPrev);
-
-//(count_direction) ? ((r_count >= r_countPrev)	?	(r_count - r_countPrev) : (r_count + 11'd1496 - r_countPrev))
-//											 : ((r_count <= r_countPrev)	?	(r_countPrev - r_count) : (r_countPrev + 11'd1496 - r_count));
+//Number of pulses per 11ms
 
 
 wire [15:0] w_rShift1, w_lShift1, w_lShift3;
 assign w_rShift1 = w_diff >> 1;
 assign w_lShift1 = w_diff << 1;
 assign w_lShift3 = w_diff >> 3;
-assign o_velocity = w_diff + w_rShift1 + w_lShift1 + w_lShift3;// 2+1+1/2+1/8
-//assign o_velocity = w_diff;
+assign o_velocity = w_diff + w_rShift1 + w_lShift1 + w_lShift3;// (2+1+1/2+1/8)*w_diff
 
 endmodule
