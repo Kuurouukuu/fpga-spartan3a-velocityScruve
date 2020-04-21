@@ -24,7 +24,7 @@ output [15:0] count;
 output [15:0] o_velocity;
 
 reg quadA_delayed, quadB_delayed;
-reg [16:0] r_Counter;
+reg [16:0] r_Counter = 'd0;
 wire w_Clk_7;
 
 always @(posedge clk) quadA_delayed <= quadA;
@@ -33,12 +33,12 @@ always @(posedge clk) quadB_delayed <= quadB;
 wire count_enable = quadA ^ quadA_delayed ^ quadB ^ quadB_delayed;
 wire count_direction = quadA ^ quadB_delayed;
 
-reg [15:0] count_prev;
-reg [15:0] r_velocity;
+reg [15:0] count_prev = 'd0;
+reg [15:0] r_velocity = 'd0;
 
-reg [15:0] count;
+reg [15:0] count = 'd0;
 
-reg [15:0] r_diff = 0;
+reg [15:0] r_diff = 'd0;
 
 wire [15:0] w_diff;
 

@@ -10,6 +10,7 @@
 
 module uart_top(      
    output     tx,
+	output	  o_full,
 	input [31:0] data_in,
 	input [8:0] address,
 	input i_wr_uart,
@@ -25,7 +26,8 @@ module uart_top(
     wire [31:0] data_out        ;    
     wire       full            ;
     wire       empty           ;
-   
+	 //wire			full;
+   assign o_full = full;
     
     // Parameters for memory
     parameter   WIDTH     =   32 ,

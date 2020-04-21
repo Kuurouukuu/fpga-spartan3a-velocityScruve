@@ -2,12 +2,17 @@
 module pwm(Clk, pwm_in, pwm_out);
 
 input Clk; 
-input [31:0] pwm_in; //Input, reference value
+input [15:0] pwm_in; //Input, reference value
 output pwm_out;// Output pwm signal
 
 reg pwm_out; 
-reg [31:0] rampa=32'b0000_0000_0000_0000_0000_0000_0000_0000; // Initialize ramp value
+reg [15:0] rampa=16'b0000_0000_0000_0000; // Initialize ramp value
 	//esta rampa tiene una frecuencia de 763Hz para el reloj de 50Mhz	
+	
+//always@*
+//begin //
+//		r_ref <= (pwm_in)+ 32'd2147483647; //wrap into postive, default is 50% pwm
+//end
 always @(posedge Clk) 
 	begin
 		rampa <= rampa + 1'b1; // Increase ramp value each clock

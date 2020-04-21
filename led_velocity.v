@@ -35,6 +35,7 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	parameter [5:0] button1 = 'b111110, button2 = 'b111101, button3 = 'b111011, button4 = 'b110111, button5 = 'b101111, button6 = 'b011111;
 	
 	wire [12:0] w_value;
+	wire w_uartFull;
 	wire w_Clk_5;
 	wire w_Direction;
 	wire DV;
@@ -44,19 +45,22 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	wire [12:0] w_position;
 	wire debounced_kp, debounced_ki, debounced_kd, debounced_hold;
 	wire debounced_A, debounced_B;
-	wire [31:0] w_un;
+	wire [15:0] w_un;
 	wire w_pwm_out;	
 	wire [1:0] w_PWM_CW;
 	wire [1:0] w_PWM_CCW;
 	wire [15:0] w_error;
 	wire w_of;
+	
+	wire [31:0] w_probe; // For Debugging
 	  
 	reg [15:0] w_setpoint = 'd150;
 	reg [1:0] r_controllerPin = 'd0;
 	reg [16:0] r_error_unsigned = 'd0;
-	reg [15:0] r_kp = 10;
-	reg [15:0] r_kd = 0;
-	reg [15:0] r_ki = 10;
+	reg [15:0] r_kp = 16'd80;
+	reg [15:0] r_kd = 16'd0;
+	reg [15:0] r_ki = 16'd2;
+	reg [15:0] r_ki_pidInput = 'd0;
 	reg [7:0] r_LED;
 	reg Clk_23;
 	reg start;
@@ -82,19 +86,19 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	DeBounce debouncer4(.clk(Clk), .button_in(Switch[4]), .DB_out(debounced_increaseKi), .n_reset(1'b1));
 	DeBounce debouncer5(.clk(Clk), .button_in(Switch[5]), .DB_out(debounced_decreaseKi), .n_reset(1'b1));
 	
-	PID pidController(.i_clk(Clk), .i_rst(~debounced_reset), .o_un(w_un), .o_valid(w_pidValid), .sp(w_setpoint), .pv(w_processvalue), .kp(r_kp), .kd(r_kd), .ki(r_ki), .overflow(w_of));
+	PID pidController(.probe(w_probe), .i_clk(Clk), .i_rst(~debounced_reset), .i_clk_sp(Clk_5), .o_un(w_un), .o_valid(w_pidValid), .sp(w_setpoint), .pv(w_processvalue), .kp(r_kp), .kd(r_kd), .ki(r_ki_pidInput), .overflow(w_of));
 	
 	pwm pwmGenerator(.Clk(Clk), .pwm_in(w_un), .pwm_out(w_pwm_out));
 	
 	Binary_to_BCD #(.INPUT_WIDTH('d13), .DECIMAL_DIGITS('d4))
 			converter	(.i_Clock(Clk),
 					.i_Binary(w_value),
-					.i_Start('b1),
+					.i_Start(1'b1),
 					.o_BCD(bcdValue),
 					.o_DV(DV));
 					
 	// Not yet DEBUG: update PID process point when output valid
-	always@(posedge w_pidValid)
+	always@(posedge Clk_5) // Sampling frequency about 183Hz
 		w_processvalue <= w_velocity;
 		
 	 // Update display value when the bcd converter output is ready 
@@ -110,9 +114,9 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	 always@(posedge Clk)
 	 begin
 		counter <= counter+1;			
-		Clk_5 <= counter[15];
+		Clk_5 <= counter[12]; // Sampling frequency
 		Clk_23 <= counter[23];
-		Clk_10 <= counter[10];
+		Clk_10 <= counter[14];
 	 end
 	 
 	 
@@ -207,19 +211,19 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 			r_error_unsigned<=w_error;
 	
 	
-	// Button for increase and decrease kp, ki
-
-	always@*
-		begin
-		if (debounced_increaseKp)
-			r_kp <= r_kp + 1;
-		if (debounced_decreaseKp)
-			r_kp <= r_kp - 1;
-		if (debounced_increaseKi)
-			r_ki <= r_ki + 1;
-		if (debounced_decreaseKi)
-			r_ki <= r_ki - 1;
-		end
+//	// Button for increase and decrease kp, ki
+//
+//	always@*
+//		begin
+//		if (debounced_increaseKp)
+//			r_kp <= r_kp + 100;
+//		if (debounced_decreaseKp)
+//			r_kp <= r_kp - 100;
+//		if (debounced_increaseKi)
+//			r_ki <= r_ki + 1;
+//		if (debounced_decreaseKi)
+//			r_ki <= r_ki - 1;
+//		end
 	
 	
 	// Check error and fire PWM based on error. Position case 
@@ -246,6 +250,12 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 					r_LED <= 'b00001000;
 				end
 	 end*/
+	 
+	 // Update K_i to prevent windup
+	 always@(Clk)
+	 begin
+		r_ki_pidInput <= (w_of) ? 'd0 : r_ki;
+	 end
 	 
 	 //Check error and fire PWM based on error. Velocity case 	 
 	 always @(posedge Clk)
@@ -281,7 +291,7 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 	assign w_PWM_CCW[1:0]={1'b0,w_pwm_out};
 	assign w_Clk_5 = Clk_5;
 	assign SevenSegment = r_SevenSegment;
-	assign w_Clk_10 = Clk_10;
+	assign w_Clk_10 = Clk_10; //Div by 2^16
 	assign LED[7:1] = {r_controllerPin, r_LED[5:1]};
 	assign LED[0] = w_of;
 	assign o_controlPin = r_controllerPin;
@@ -289,14 +299,14 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 
 
 // Implement Uart module for communication
-	reg [31:0] r_uart_data_in, r_uart_data_prev;
+	reg [0:31] r_uart_data_in, r_uart_data_prev;
 	reg r_uart_update = 'b0, r_uart_update_prev;
 	wire w_uart_write;
 	
 	
-	always@(posedge w_Clk_10)
+	always@(posedge Clk_10)
 	begin
-		r_uart_data_in <= {16'b0000_0000_0000_0000,w_un};
+		r_uart_data_in <= {16'b0, w_velocity};
 		r_uart_update <= ~r_uart_update;
 	end
 	
@@ -311,6 +321,7 @@ module led_velocity(Clk, Switch, SevenSegment, Enable, i_A, i_B, DPSwitch, o_con
 				.data_in(r_uart_data_in),
 				.address(r_uart_address),
 				.i_wr_uart(w_uart_write),
+				.o_full(w_uartFull),
 				.clk(Clk),
 				.reset('b0)
 			);
