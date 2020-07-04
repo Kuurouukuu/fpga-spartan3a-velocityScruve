@@ -23,7 +23,9 @@ class serialPlot:
         self.thread = None
         self.plotTimer = 0
         self.previousTimer = 0
-        # self.csvData = []
+        self.csvData = []
+        self.csvData2 = [];
+        self.j = 0;
 
         print('Trying to connect to: ' + str(serialPort) + ' at ' + str(serialBaud) + ' BAUD.')
         try:
@@ -45,35 +47,45 @@ class serialPlot:
         self.plotTimer = int((currentTimer - self.previousTimer) * 1000)     # the first reading will be erroneous
         self.previousTimer = currentTimer
         timeText.set_text('Plot Interval = ' + str(self.plotTimer) + 'ms')
-        value  =  int.from_bytes(bytes(bytearray(self.rawData)),"little")    # use 'h' for a 2 byte integer
+        value  =  int.from_bytes(bytes(bytearray(self.rawData[2:4])),"little")     # use 'h' for a 2 byte integer, first value is control signal, second value is speed
+        control = int.from_bytes(bytes(bytearray(self.rawData[0:2])),"little");
         self.data.append(value)    # we get the latest data point and append it to our array
         lines.set_data(range(self.plotMaxLength), self.data)
         lineValueText.set_text('[' + lineLabel + '] = ' + str(value))
-        # self.csvData.append(self.data[-1])
+        print(j);
+        j = j + 1;
 
     def backgroundThread(self):    # retrieve data
         time.sleep(1.0)  # give some buffer time for retrieving data
         self.serialConnection.reset_input_buffer()
+        i = 0;
         while (self.isRun):
-            self.rawData = self.serialConnection.read(4);
+            self.rawData = self.serialConnection.read_until(size=4);
             self.isReceiving = True
-            print(self.rawData)
+            print(self.rawData);
+            value  =  int.from_bytes(bytes(bytearray(self.rawData[2:4])),"little")     # use 'h' for a 2 byte integer, first value is control signal, second value is speed
+            control = int.from_bytes(bytes(bytearray(self.rawData[0:2])),"little");
+            self.csvData.append(value) #append both control signal and speed value
+            self.csvData2.append(control);
+            i = i + 1;
+            print(i);
 
     def close(self):
         self.isRun = False
         self.thread.join()
         self.serialConnection.close()
         print('Disconnected...')
-        # df = pd.DataFrame(self.csvData)
-        # df.to_csv('/home/rikisenia/Desktop/data.csv')
+        df = pd.DataFrame(zip(self.csvData, self.csvData2) ,columns = ['Speed','Control'])
+        filename = input("Enter file name");
+        df.to_csv('/home/kuro/Desktop/'+filename)
 
 
 def main():
     # portName = 'COM5'     # for windows users
     portName = '/dev/ttyUSB0'
-    baudRate = 9600
+    baudRate = 57600
     maxPlotLength = 100
-    dataNumBytes = 8        # number of bytes of 1 data point
+    dataNumBytes = 4       # number of bytes of 1 data point
     s = serialPlot(portName, baudRate, maxPlotLength, dataNumBytes)   # initializes all required variables
     s.readSerialStart()                                               # starts background thread
 
@@ -82,7 +94,7 @@ def main():
     xmin = 0
     xmax = maxPlotLength
     ymin = -2
-    ymax = 300
+    ymax = 500
     fig = plt.figure()
     ax = plt.axes(xlim=(xmin, xmax), ylim=(float(ymin - (ymax - ymin) / 10), float(ymax + (ymax - ymin) / 10)))
     ax.set_title('Speed of DC Servo')

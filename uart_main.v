@@ -39,9 +39,11 @@ module uart
    (
     input wire clk, reset,
     input wire rd_uart, wr_uart, rx,
-    input wire [31:0] w_data,
+    input wire [7:0] w_data,
     output wire tx_full, rx_empty, tx,
-    output wire [31:0] r_data
+    output wire [7:0] r_data,
+	 
+	 output wire [3:0] probe
    );
 
    // signal declaration
@@ -77,5 +79,5 @@ module uart
        .tx_done_tck(tx_done_tck), .tx(tx));
 
    assign tx_fifo_not_empty = ~tx_empty;
-
+	//assign tx_fifo_not_empty = 1'b1;
 endmodule

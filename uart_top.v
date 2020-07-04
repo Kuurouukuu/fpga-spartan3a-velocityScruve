@@ -11,7 +11,8 @@
 module uart_top(      
    output     tx,
 	output	  o_full,
-	input [31:0] data_in,
+	output [3:0] probe,
+	input [7:0] data_in,
 	input [8:0] address,
 	input i_wr_uart,
 	input      clk,        
@@ -30,9 +31,9 @@ module uart_top(
    assign o_full = full;
     
     // Parameters for memory
-    parameter   WIDTH     =   32 ,
-                DEPTH     =   512,
-                ADDR      =   9 ;
+    parameter   WIDTH     =   8 ,
+                DEPTH     =   2048,
+                ADDR      =   11 ;
                  
     // Ram & address
     //reg  [ADDR-1:0] address   = 0   ;
@@ -82,20 +83,22 @@ module uart_top(
     end                                             
     
     // Instantiation of uart module
-    // DIVISOR = 16 for 9600 baudrate, 12MHz sys clock, 32 bit data
-    uart #(     .DIVISOR		(7'd79),   
+    // DIVISOR = 13 for 57600 baudrate, 12MHz sys clock, 8 bit data
+    uart #(     .DIVISOR		(7'd13),   
                 .DVSR_BIT		(4'd7) ,
                 .Data_Bits		(4'd8) , // 8 bits per transmission
-                .FIFO_Add_Bit	(4'd9) // 2^9 = 512
+                .FIFO_Add_Bit	(4'd5) // 2^5 = 32 => 256-bit buffer. or 64-bit data
     ) uart (    .clk				(clk)			,
                 .rd_uart		(rd_uart)	,
                 .reset			(reset)		,
                 .rx				(rx)			,
                 .w_data			(data_in)	,
-                .wr_uart		(wr_uart)	,
+                .wr_uart		(i_wr_uart)	,
                 .r_data			(data_out)	,
                 .rx_empty		(empty)		,
                 .tx				(tx)			,
-                .tx_full		(full)
+                .tx_full		(full)		,
+					 
+					 .probe			(probe)
            );             
 endmodule

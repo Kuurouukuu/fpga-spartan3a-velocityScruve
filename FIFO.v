@@ -36,37 +36,28 @@ module fifo#(parameter B=8, // number of bits in a word
    (
     input wire clk, reset,
     input wire rd, wr,
-    input wire [31:0] w_data, //we will store 32 bit
+    input wire [7:0] w_data,
     output wire empty, full,
-    output wire [7:0] r_data //only 8 bit per tranmission
+    output wire [7:0] r_data
    );
 
    
-   reg [31:0] array_reg [2**W-1:0];  // register array
-   reg [W-1:0] w_ptr_reg = 'd0, w_ptr_next, w_ptr_succ ='d0;
-   reg [W-1:0] r_ptr_reg = 'd0, r_ptr_next = 'd0, r_ptr_succ ='d0;
+   reg [7:0] array_reg [2**W-1:0];  // register array
+   reg [W-1:0] w_ptr_reg = 'd0, w_ptr_next, w_ptr_succ;
+   reg [W-1:0] r_ptr_reg = 'd0, r_ptr_next, r_ptr_succ;
    reg full_reg = 'b0, empty_reg = 'b1, full_next, empty_next;
-	reg [1:0] r_counter_next = 'd0;
    wire wr_en;
-	
-	reg [7:0] r_dataout;
-	reg [1:0] r_counter = 'd0;
-	
-	integer i;
-	initial for (i = 0;i < 2**W;i = i + 1) array_reg[i] = 'd0; 
 
-// Write data into FIFO queue
    
    always @(posedge clk)
       if (wr_en)
          array_reg[w_ptr_reg] <= w_data;
    
-   assign r_data = r_dataout;
+   assign r_data = array_reg[r_ptr_reg];
    
-   assign wr_en = wr & ~full_reg; // Write Enable only if not full
+   assign wr_en = wr & ~full_reg;
 
-	
-
+  
    always @(posedge clk, posedge reset)
       if (reset)
          begin
@@ -77,39 +68,20 @@ module fifo#(parameter B=8, // number of bits in a word
          end
       else
          begin
-            w_ptr_reg <= w_ptr_next; // Increaese pointer
-            r_ptr_reg <= r_ptr_next; // Increase pointer
-            full_reg <= full_next; // Is it full?
-            empty_reg <= empty_next; // Is it full?
-				r_counter <= r_counter_next;
+            w_ptr_reg <= w_ptr_next;
+            r_ptr_reg <= r_ptr_next;
+            full_reg <= full_next;
+            empty_reg <= empty_next;
          end
 
-	always@* //transfer 8 bits per read
-	begin
-		case (r_counter)
-			'd0: begin
-				r_dataout = array_reg[r_ptr_reg][7:0];
-			end
-			'd1: begin
-				r_dataout = array_reg[r_ptr_reg][15:8];
-			end
-			'd2: begin
-				r_dataout = array_reg[r_ptr_reg][23:16];
-			end
-			'd3: begin
-				r_dataout = array_reg[r_ptr_reg][31:24];
-			end
-			endcase
-	end
    
    always @*
-   begin // Combinational Logic
-	// If not full, pointer is increase to next read write pointer. If full, set a flag and make the read (write) address unchanged.
-
-      w_ptr_succ = w_ptr_reg + 1; // succeed address, to be assigned to pointer if not full
-		r_counter_next = r_counter;
+   begin
+     
+      w_ptr_succ = w_ptr_reg + 1;
+      r_ptr_succ = r_ptr_reg + 1;
       
-      w_ptr_next = w_ptr_reg; // default is current address
+      w_ptr_next = w_ptr_reg;
       r_ptr_next = r_ptr_reg;
       full_next = full_reg;
       empty_next = empty_reg;
@@ -118,29 +90,23 @@ module fifo#(parameter B=8, // number of bits in a word
          2'b01: // read
             if (~empty_reg) 
                begin
-					
-					if (r_counter == 'd3) begin // transmit 4 byte, to next address
-						r_ptr_succ = r_ptr_reg + 1;
-						end
-						r_counter_next = r_counter + 'd1;
-						r_ptr_next = r_ptr_succ; // If not empty then increase
-						full_next = 1'b0; // reset full flag
-					if (r_ptr_succ==w_ptr_reg) //read address is the current write address
-						empty_next = 1'b1; // signal empty buffer
+                  r_ptr_next = r_ptr_succ;
+                  full_next = 1'b0;
+                  if (r_ptr_succ==w_ptr_reg)
+                     empty_next = 1'b1;
                end
          2'b10: // write
             if (~full_reg) 
                begin
-                  w_ptr_next = w_ptr_succ; // if not full, increase write address
-                  empty_next = 1'b0; // and signal it is not empty
+                  w_ptr_next = w_ptr_succ;
+                  empty_next = 1'b0;
                   if (w_ptr_succ==r_ptr_reg)
-                     full_next = 1'b1; // if write address is also the read address, set the full flag
+                     full_next = 1'b1;
                end
          2'b11: 
-            begin // read and write same time
+            begin
                w_ptr_next = w_ptr_succ;
                r_ptr_next = r_ptr_succ;
-					r_counter_next = r_counter + 'd1; // read one
             end
       endcase
    end
@@ -150,4 +116,3 @@ module fifo#(parameter B=8, // number of bits in a word
    assign empty = empty_reg;
 
 endmodule
-

@@ -18,10 +18,11 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module quad(clk, quadA, quadB, count, rst, o_velocity);
+module quad(clk, quadA, quadB, count, rst, o_velocity, count2);
 input clk, quadA, quadB, rst;
 output [15:0] count;
 output [15:0] o_velocity;
+output [31:0] count2;
 
 reg quadA_delayed, quadB_delayed;
 reg [16:0] r_Counter = 'd0;
@@ -36,7 +37,8 @@ wire count_direction = quadA ^ quadB_delayed;
 reg [15:0] count_prev = 'd0;
 reg [15:0] r_velocity = 'd0;
 
-reg [15:0] count = 'd0;
+reg [15:0] count = 'd0; // count for speed calculating
+reg [31:0] count2 = 'd0; // count pulse
 
 reg [15:0] r_diff = 'd0;
 
@@ -58,8 +60,16 @@ begin
 		r_Counter <= r_Counter + 1;
 		if(count_enable)
 		  begin
-			if(count_direction) count<=count+1; else count<=count-1;
-			 if (count == 1497)
+			if(count_direction) 
+				begin 
+					count<=count+1; 
+					count2 <= count2 + 1;
+				end 
+				else begin 
+					count<=count-1;
+					count2 <= count2 + 1;
+				end
+			 if (count == 1497) // For speed calculating
 				count <= 0;
 			 else if (count == 'b1111_1111_1111_1111)
 				count <= 1496;
@@ -84,14 +94,19 @@ begin
 	end
 end
 
-assign w_diff = (r_count >= r_countPrev) ? (r_count - r_countPrev) : (r_count + 'd1496 - r_countPrev);
+assign w_diff = (r_count >= r_countPrev) ? (r_count - r_countPrev) : (r_count + 'd1497 - r_countPrev);
 //Number of pulses per 11ms
 
+/* Use this for direct velocity calculation */
 
-wire [15:0] w_rShift1, w_lShift1, w_lShift3;
-assign w_rShift1 = w_diff >> 1;
-assign w_lShift1 = w_diff << 1;
-assign w_lShift3 = w_diff >> 3;
-assign o_velocity = w_diff + w_rShift1 + w_lShift1 + w_lShift3;// (2+1+1/2+1/8)*w_diff
+//wire [15:0] w_rShift1, w_lShift1, w_lShift3;
+//assign w_rShift1 = w_diff >> 1;
+//assign w_lShift1 = w_diff << 1;
+//assign w_lShift3 = w_diff >> 3;
+//assign o_velocity = w_diff + w_rShift1 + w_lShift1 + w_lShift3;// (2+1+1/2+1/8)*w_diff
+
+/* Use this for output Delta Pulse in sampling period of times*/
+
+assign o_velocity = w_diff;
 
 endmodule
